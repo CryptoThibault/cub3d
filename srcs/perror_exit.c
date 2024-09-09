@@ -1,24 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   perror_exit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchalaou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/09 16:55:10 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/09 16:58:08 by tchalaou         ###   ########.fr       */
+/*   Created: 2024/09/09 16:54:52 by tchalaou          #+#    #+#             */
+/*   Updated: 2024/09/09 16:57:31 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	main(int ac, char **av)
+void	free_array(char **array)
 {
-	t_data	*data;
+	int	i;
 
-	if (ac != 2)
-		return (printf("Usage: %s <infile>", av[0]), 1);
-	data = create_data(av[1]);
-	printf("ok");
-	return (EXIT_SUCCESS);
+	i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array);
+}
+
+void	free_data(t_data *data)
+{
+	if (data->map)
+		free_array(data->map);
+	free(data);
+}
+
+void	perror_exit(char *msg, t_data *data)
+{
+	ft_printf("Error: %s\n", msg);
+	if (data)
+		free_data(data);
+	exit(EXIT_FAILURE);
 }
