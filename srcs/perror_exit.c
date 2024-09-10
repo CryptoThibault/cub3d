@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:52 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/10 12:05:13 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:13:23 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_window(t_data *data)
 	mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
-}
+} 
 
 void	free_array(char **array)
 {
