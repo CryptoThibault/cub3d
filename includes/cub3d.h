@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/10 13:33:53 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/10 14:25:06 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 # define CUB3D_H
 
 # include "../libft/libft.h"
+# include "../mlx/mlx.h"
 # include <stdio.h>
 # include <fcntl.h>
-# include <stdlib.h>
-# include <stdint.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
 # include <math.h>
 
 typedef struct s_pos
