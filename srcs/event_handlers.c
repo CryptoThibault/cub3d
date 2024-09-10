@@ -1,25 +1,13 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   event_handlers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/09 16:55:10 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/10 13:15:29 by achevron         ###   ########.fr       */
+/*   Created: 2024/09/10 13:18:09 by achevron          #+#    #+#             */
+/*   Updated: 2024/09/10 13:18:18 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	main(int ac, char **av)
-{
-	t_data	*data;
-
-	if (ac != 2)
-		return (printf("Usage: %s <infile>", av[0]), 1);
-	data = create_data(av[1]);
-	create_window(data);
-	printf("ok");
-	return (EXIT_SUCCESS);
-}

@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/10 12:09:21 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/10 13:33:53 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@
 # include "../libft/libft.h"
 # include <stdio.h>
 # include <fcntl.h>
+# include <stdlib.h>
+# include <stdint.h>
+# include <X11/keysym.h>
+# include <X11/X.h>
+# include <math.h>
 
 typedef struct s_pos
 {
@@ -32,8 +37,8 @@ typedef struct	s_data
 	char	*south_texture;
 	char	*west_texture;
 	char	*east_texture;
-	int	floor_rgb[3];
-	int	ceiling_rgb[3];
+	int		floor_rgb[3];
+	int		ceiling_rgb[3];
 	char	**map;
 	t_pos	size;
 	t_pos	player_pos;
@@ -52,10 +57,13 @@ void	free_window(t_data *data);
 t_data	*create_data(char *infile);
 void	create_map(int fd, t_data *data);
 int		get_line_count(int fd);
-int		get_rgb(char *line, char *prefix);
+int		*get_rgb(char *line, char *prefix);
 char	*get_texture(char *line, char *prefix);
 
 //win_manager.c
 int		create_window(t_data *data);
+
+//event_handlers.c
+
 
 #endif
