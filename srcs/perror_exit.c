@@ -6,7 +6,7 @@
 /*   By: tchalaou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:52 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/09 16:57:31 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/10 14:33:00 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_data(t_data *data)
 
 void	perror_exit(char *msg, t_data *data)
 {
-	ft_printf("Error: %s\n", msg);
+	printf("Error: %s\n", msg);
 	if (data)
 		free_data(data);
 	exit(EXIT_FAILURE);

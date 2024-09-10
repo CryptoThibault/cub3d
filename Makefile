@@ -4,7 +4,7 @@ CC = cc
 FLAGS = -Wall -Wextra -Werror -Iincludes
 LIBFT = libft
 
-SRCS = srcs/main.c srcs/create_data.c
+SRCS = srcs/main.c srcs/create_data.c srcs/perror_exit.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

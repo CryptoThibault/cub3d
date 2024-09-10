@@ -6,7 +6,7 @@
 /*   By: tchalaou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/09 17:22:47 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:36:31 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ typedef struct	s_data
 
 t_data	*create_data(char *infile);
 void	perror_exit(char *msg, t_data *data);
+void	free_data(t_data *data);
 
 #endif
