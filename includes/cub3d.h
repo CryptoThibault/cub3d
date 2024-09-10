@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/10 14:25:06 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:30:35 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
+# include <X11/keysym.h>
+# include <X11/X.h>
 
 typedef struct s_pos
 {
@@ -30,6 +32,8 @@ typedef struct	s_data
 	void	*mlx_ptr;
 	void	*win_ptr;
 	void	*textures[4];
+	int		width;
+	int		height;
 	char	*north_texture;
 	char	*south_texture;
 	char	*west_texture;
