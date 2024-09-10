@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:55:02 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/10 13:47:39 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/10 19:10:54 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,23 @@ int	get_line_count(int fd)
 
 void	create_map(int fd, t_data *data)
 {
-	t_pos	pos;
+	t_ipos	pos;
 
-	data->size.y = get_line_count(fd);
-	data->map = malloc(sizeof(char *) * (data->size.y + 1));
+	data->map_size.y = 14;//get_line_count(fd);
+	data->map = malloc(sizeof(char *) * (data->map_size.y + 1));
 	if (!data->map)
 		perror_exit("map allocaton failed", data);
 	pos.y = -1;
-	data->size.x = 0;
-	while (++pos.y < data->size.y)
+	data->map_size.x = 0;
+	while (++pos.y < data->map_size.y)
 	{
-		data->map[(int)pos.y] = get_next_line(fd);
-		pos.x = ft_strlen(data->map[(int)pos.y]);
-		if (pos.x > data->size.x)
-			data->size.x = pos.x;
+		data->map[pos.y] = get_next_line(fd);
+		pos.x = ft_strlen(data->map[pos.y]) - 1;
+		data->map[pos.y][pos.x] = 0;
+		if (pos.x > data->map_size.x)
+			data->map_size.x = pos.x;
 	}
-	data->map[(int)pos.y] = NULL;
+	data->map[pos.y] = NULL;
 }
 
 void	check_new_line(int fd, t_data *data)

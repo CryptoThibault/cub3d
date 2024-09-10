@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 13:18:09 by achevron          #+#    #+#             */
-/*   Updated: 2024/09/10 15:10:49 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/10 18:30:06 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	handle_keypress(int keysym, t_data *data)
 	if (keysym == XK_Escape)
 		mlx_loop_end(data->mlx_ptr);
 	if (keysym == XK_Left)
-		data->direction -= 0.1;
+		data->player_dir -= 0.1;
 	if (keysym == XK_Right)
-		data->direction += 0.1;
+		data->player_dir += 0.1;
 	if (keysym == XK_W || keysym == XK_w)
 		data->player_pos.x += 0.1;
 	if (keysym == XK_A || keysym == XK_a)
