@@ -20,7 +20,7 @@ MLX = mlx
 
 SRCS = srcs/create_data.c srcs/event_handlers.c srcs/main.c \
 		perror_exit.c srcs/win_manager.c
-		
+
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

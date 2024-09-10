@@ -12,44 +12,34 @@
 
 #include "cub3d.h"
 
-char	*get_texture(char *line, char *prefix)
+void	get_texture(int fd, t_data *data, char *texture, char *prefix)
 {
-	char	*path;
+	char	*line;
 
-	(void)prefix;
-/*	if (ft_strncmp(line, ft_strcat(prefix, " ./"), 5));
-	{
-		printf("Error: texture path line wrong");
-		exit(EXIT_FAILURE);
-	}
-*/
-
-	path = ft_strdup(line + 3);
+	line = get_next_line(fd);
+	if (ft_strncmp(line, prefix, 2))
+		perror_exit("wrong texture line format", data);
+	texture = ft_strdup(line);
 	free(line);
-	return (path);
 }
 
-int	get_rgb(char *line, char *prefix)[3]
+void	get_rgb(int fd, t_data *data, int rgb[3], char *prefix)
 {
-	int	rgb[3];
+	char	*line;
 	int	i;
 
-	(void)prefix;
-/*	if (ft_strncmp(line, ft_strcat(prefix, " "), 2));
-	{
-		printf("Error: rgb line wrong");
-		exit(EXIT_FAILURE);
-	}	
-*/
+	line = get_next_line(fd);
+	if (line[0] != prefix[0])
+		perror_exit("wrong rgb line format", data);
 	i = 3;
 	rgb[0] = ft_atoi(&line[i]);
-	while (line[i - 1] == ',')
-		i++;
-	rgb[1] = ft_atoi(&line [i]);
-	while (line[i - 1] == ',')
-		i++;
+	while (line[++i] != ',')
+		;
+	rgb[1] = ft_atoi(&line[i]);
+	while (line[++i] != ',')
+		;
 	rgb[2] = ft_atoi(&line[i]);
-	return (rgb);
+	free(line);
 }
 
 int	get_line_count(int fd)
@@ -82,37 +72,51 @@ void	create_map(int fd, t_data *data)
 	while (++pos.y < data->size.y)
 	{
 		data->map[(int)pos.y] = get_next_line(fd);
-		pos.x  = ft_strlen(data->map[(int)pos.y]);
+		pos.x = ft_strlen(data->map[(int)pos.y]);
 		if (pos.x > data->size.x)
 			data->size.x = pos.x;
 	}
 	data->map[(int)pos.y] = NULL;
 }
 
+void	check_new_line(int fd, t_data *data)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	if (ft_strncmp(line, "\n", 2))
+		perror_exit("wrong infile format", data);
+	free(line);
+}
+
 t_data	*create_data(char *infile)
 {
 	t_data	*data;
 	int	fd;
-	char	*new_line;
 
-	if (!infile /*check .cub*/)
-		perror_exit("infile should end with .cub", NULL);
+	if (ft_strncmp(infile + ft_strlen(infile) - 4, ".cub", 4))
+		perror_exit("infile don't end with .cub", NULL);
 	fd = open(infile, O_RDONLY);
 	if (fd == -1)
 		perror_exit("can't open infile", NULL);
 	data = malloc(sizeof(t_data));
 	if (!data)
 		perror_exit("data allocation failed", NULL);
-	data->north_texture = get_texture(get_next_line(fd), "NO");
-	data->south_texture = get_texture(get_next_line(fd), "SO");
-	data->west_texture = get_texture(get_next_line(fd), "WE");
-	data->east_texture = get_texture(get_next_line(fd), "EA");
-	new_line = get_next_line(fd);
-	free(new_line);
-	data->floor_rgb = get_rgb(get_next_line(fd), "F");
-	data->ceiling_rgb = get_rgb(get_next_line(fd), "C");
-	new_line = get_next_line(fd);
-	free(new_line);
+	get_texture(fd, data, data->north_texture, "NO");
+	get_texture(fd, data, data->south_texture, "SO");
+	get_texture(fd, data, data->west_texture, "WE");
+	get_texture(fd, data, data->east_texture, "EA");
+	check_new_line(fd, data);
+	get_rgb(fd, data, data->floor_rgb, "F");
+	get_rgb(fd, data, data->ceiling_rgb, "C");
+	check_new_line(fd, data);
 	create_map(fd, data);
 	close(fd);
+	return (data);
 }
+
+//Compter le nombre de lignes du fichier
+//Allouer et remplir un buffer avec get_next_line
+//Detecter le prefix, ignorer les whitespaces et ecrire dans data
+//Si une ligne est vide, on l'ignore
+//Une fois la map detecter, on rempli data-map avec tout le contenu (on n'ignore plus les lignes vides)

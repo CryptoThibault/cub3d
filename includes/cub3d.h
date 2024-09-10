@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/10 15:30:35 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/10 15:36:31 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,5 @@ char	*get_texture(char *line, char *prefix);
 int		create_window(t_data *data);
 
 //event_handlers.c
-
 
 #endif

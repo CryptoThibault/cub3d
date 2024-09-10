@@ -53,7 +53,7 @@ void	free_data(t_data *data)
 
 void	perror_exit(char *msg, t_data *data)
 {
-	ft_printf("Error: %s\n", msg);
+	printf("Error: %s\n", msg);
 	if (data)
 		free_data(data);
 	exit(EXIT_FAILURE);
