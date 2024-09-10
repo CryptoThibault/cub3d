@@ -6,9 +6,13 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 11:38:46 by achevron          #+#    #+#             */
-/*   Updated: 2024/09/10 11:39:01 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/10 11:54:51 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+int	create_window(t_data *data)
+{
+	
+}

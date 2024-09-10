@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tchalaou <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/09 17:22:47 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/10 12:09:21 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,22 @@ typedef struct	s_data
 	float	direction;
 }		t_data;
 
+//main.c
 
-t_data	*create_data(char *infile);
+//perror_exit.c
 void	perror_exit(char *msg, t_data *data);
+void	free_data(t_data *data);
+void	free_array(char **array);
+void	free_window(t_data *data);
+
+//create_data.c
+t_data	*create_data(char *infile);
+void	create_map(int fd, t_data *data);
+int		get_line_count(int fd);
+int		get_rgb(char *line, char *prefix);
+char	*get_texture(char *line, char *prefix);
+
+//win_manager.c
+int		create_window(t_data *data);
 
 #endif
