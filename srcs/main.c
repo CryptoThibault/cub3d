@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:55:10 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/10 19:45:01 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/11 17:41:57 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ void	print_array(char **array)
 {
 	int	i = -1;
 	while (array[++i])
-	{
 		printf("%s\n", array[i]);
-	}
 }
 
 int	main(int ac, char **av)
@@ -28,9 +26,18 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		perror_exit("Usage: ./cub3D <infile>", NULL);
 	data = create_data(av[1]);
-	print_array(data->map);
-	check_map(data);
-	printf("Check done!\n");
+
+	printf("NO %s\n", data->north_texture);
+	printf("SO %s\n", data->south_texture);
+	printf("EA %s\n", data->east_texture);
+	printf("WE %s\n", data->west_texture);
+	printf("F %d,%d,%d\n", data->floor_rgb[0], data->floor_rgb[1],  data->floor_rgb[2]);
+	printf("C %d,%d,%d\n\n", data->ceiling_rgb[0], data->ceiling_rgb[1],  data->ceiling_rgb[2]);
+	//print_array(data->map);
+
+	//check_map(data);
+	//printf("Check done!\n");
+
 	//create_window(data);
 	//load_textures(data);
 	//run_game(data);

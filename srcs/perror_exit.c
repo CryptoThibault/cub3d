@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:52 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/10 19:23:10 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/11 19:10:57 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,13 @@ void	free_array(char **array)
 
 void	free_data(t_data *data)
 {
+	free(data->north_texture);
+	free(data->south_texture);
+	free(data->east_texture);
+	free(data->west_texture);
 	if (data->map)
 		free_array(data->map);
-	if (data->textures[0])
-		free_textures(data, 4);
+	free_textures(data, 4);
 	if (data->mlx_ptr)
 		free_window(data);
 	free(data);

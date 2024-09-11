@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/10 19:41:58 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/11 15:54:36 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,12 @@ typedef struct	s_data
 	float	player_dir;
 }		t_data;
 
-//perror_exit.c
 void	perror_exit(char *msg, t_data *data);
 void	free_data(t_data *data);
-
-//create_data.c
+void	free_array(char **array);
 t_data	*create_data(char *infile);
-
 void	check_map(t_data *data);
-
-//win_manager.c
 void	create_window(t_data *data);
-
 void    load_textures(t_data *data);
-//event_handlers.c
 
 #endif
