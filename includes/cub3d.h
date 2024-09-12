@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/12 19:22:45 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/12 20:09:00 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@
 # include <X11/X.h>
 
 # define _USE_MATH_DEFINES
+# define PLAYER_RAD 0.2
+# define POS_MVT 0.1
+# define DIR_MVT 0.1
 
 typedef struct	s_ipos
 {
