@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/12 20:09:00 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/12 20:21:54 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct	s_data
 	int		keylist[6];
 	int		keypress[65364];
 }		t_data;
+
 
 void	perror_exit(char *msg, t_data *data);
 void	free_data(t_data *data);
