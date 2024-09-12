@@ -6,7 +6,7 @@
 #    By: achevron <achevron@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 14:26:00 by achevron          #+#    #+#              #
-#    Updated: 2024/09/10 19:44:08 by tchalaou         ###   ########.fr        #
+#    Updated: 2024/09/12 19:01:18 by tchalaou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LIBFT = libft
 MLX = mlx
 
 SRCS = srcs/main.c srcs/create_data.c srcs/check_map.c srcs/perror_exit.c \
-       srcs/win_manager.c srcs/event_handlers.c srcs/load_textures.c
+       srcs/create_window.c srcs/load_textures.c srcs/run_game.c srcs/handle_key.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

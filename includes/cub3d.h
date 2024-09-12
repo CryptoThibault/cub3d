@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/11 15:54:36 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:22:45 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <math.h>
 # include <X11/keysym.h>
 # include <X11/X.h>
+
+# define _USE_MATH_DEFINES
 
 typedef struct	s_ipos
 {
@@ -50,6 +52,8 @@ typedef struct	s_data
 	t_fpos	map_size;
 	t_fpos	player_pos;
 	float	player_dir;
+	int		keylist[6];
+	int		keypress[65364];
 }		t_data;
 
 void	perror_exit(char *msg, t_data *data);
@@ -59,5 +63,12 @@ t_data	*create_data(char *infile);
 void	check_map(t_data *data);
 void	create_window(t_data *data);
 void    load_textures(t_data *data);
+void	run_game(t_data *data);
+void	update_screen(t_data *data);
+void	init_keylist(t_data *data);
+int		handle_key(t_data *data);
+int		handle_keypress(int keysym, t_data *data);
+int		handle_keyrelease(int keysym, t_data *data);
+int		close_window(t_data *data);
 
 #endif

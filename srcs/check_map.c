@@ -6,7 +6,7 @@
 /*   By: tchalaou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 17:41:17 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/10 19:40:25 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/12 18:32:32 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	set_player(t_data *data, t_ipos pos, char symbol, char **char_list)
 	if (symbol == 'N')
 		data->player_dir = 0;
 	else if (symbol == 'S')
-		data->player_dir = 180;
+		data->player_dir = M_PI;
 	else if (symbol == 'E')
-		data->player_dir = 90;
+		data->player_dir = 3 * M_PI_2;
 	else if (symbol == 'W')
-		data->player_dir = 270;
+		data->player_dir = M_PI_2;
 }
 
 void	check_outlines(t_data *data, t_ipos pos)

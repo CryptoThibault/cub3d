@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:55:02 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/11 19:40:27 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/12 19:03:56 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,5 +256,6 @@ t_data	*create_data(char *infile)
 		pos.y++;
 	//get_map(data, array, pos);
 	free_array(array);
+	init_keylist(data);
 	return (data);
 }
