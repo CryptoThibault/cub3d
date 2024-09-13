@@ -6,117 +6,38 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:55:02 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/12 19:03:56 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/13 17:37:52 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-/*
-void	get_texture(int fd, t_data *data, char **texture, char *prefix)
-{
-	char	*line;
 
-	line = get_next_line(fd);
-	if (ft_strncmp(line, prefix, 2))
-		perror_exit("wrong texture line format", data);
-	*texture = ft_strdup(line + 3);
-	free(line);
+int	arraysize(char **array)
+{
+	int	size;
+
+	size = 0;
+	while (array[size])
+		size++;
+	return (size);
 }
 
-void	get_rgb(int fd, t_data *data, int rgb[3], char *prefix)
+void	get_map(t_data *data, char **array, t_ipos pos)
 {
-	char	*line;
-	int	i;
-
-	line = get_next_line(fd);
-	if (line[0] != prefix[0])
-		perror_exit("wrong rgb line format", data);
-	i = 2;
-	rgb[0] = ft_atoi(&line[i]);
-	while (line[++i - 1] != ',')
-		;
-	rgb[1] = ft_atoi(&line[i]);
-	while (line[++i - 1] != ',')
-		;
-	rgb[2] = ft_atoi(&line[i]);
-	free(line);
-}
-
-int	get_line_count(int fd)
-{
-	char	*line;
-	int		count;
-
-	count = 0;
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		free(line);
-		count++;
-	}
-	return (count);
-}
-
-void	create_map(int fd, t_data *data)
-{
-	t_ipos	pos;
-
-	data->map_size.y = 14;//get_line_count(fd);
-	data->map = malloc(sizeof(char *) * (data->map_size.y + 1));
+	data->map = malloc(sizeof(char *) * ((arraysize(array + pos.y) + 1)));
 	if (!data->map)
-		perror_exit("map allocaton failed", data);
-	pos.y = -1;
-	data->map_size.x = 0;
-	while (++pos.y < data->map_size.y)
+		perror_exit("map allocation failed", data);
+	data->map_size.y = -1;
+	data->map_size.x = -1;
+	while (array[pos.y])
 	{
-		data->map[pos.y] = get_next_line(fd);
-		pos.x = ft_strlen(data->map[pos.y]) - 1;
-		data->map[pos.y][pos.x] = 0;
+		data->map[++data->map_size.y] = ft_strdup(array[pos.y++]);
+		pos.x = ft_strlen(data->map[data->map_size.y]);
 		if (pos.x > data->map_size.x)
 			data->map_size.x = pos.x;
 	}
-	data->map[pos.y] = NULL;
+	data->map[++data->map_size.y] = NULL;
 }
-
-void	check_new_line(int fd, t_data *data)
-{
-	char	*line;
-
-	line = get_next_line(fd);
-	if (ft_strncmp(line, "\n", 2))
-		perror_exit("wrong infile format", data);
-	free(line);
-}
-
-t_data	*create_data(char *infile)
-{
-	t_data	*data;
-	int	fd;
-
-	if (ft_strncmp(infile + ft_strlen(infile) - 4, ".cub", 4))
-		perror_exit("infile don't end with .cub", NULL);
-	fd = open(infile, O_RDONLY);
-	if (fd == -1)
-		perror_exit("can't open infile", NULL);
-	data = ft_calloc(sizeof(t_data), 1);
-	if (!data)
-		perror_exit("data allocation failed", NULL);
-	get_texture(fd, data, &data->north_texture, "NO");
-	get_texture(fd, data, &data->south_texture, "SO");
-	get_texture(fd, data, &data->west_texture, "WE");
-	get_texture(fd, data, &data->east_texture, "EA");
-	check_new_line(fd, data);
-	get_rgb(fd, data, data->floor_rgb, "F");
-	get_rgb(fd, data, data->ceiling_rgb, "C");
-	check_new_line(fd, data);
-	create_map(fd, data);
-	close(fd);
-	return (data);
-}
-*/
-//-------------------------
 
 int	get_line_count(int fd)
 {
@@ -151,6 +72,8 @@ void	get_texture(t_data *data, char **texture, char **array, t_ipos *pos)
 	(*pos).x += 2;
 	ignore_whitespace(array, pos);
 	*texture = ft_strdup(array[(*pos).y] + (*pos).x);
+	printf("get_texture: %s\n", *texture);
+	//check if texture format is good
 	(void)data;
 }
 
@@ -166,8 +89,8 @@ void	get_rgb(t_data *data, int rgb[3], char **array, t_ipos *pos)
 		if (!ft_isdigit(array[(*pos).y][i]) && array[(*pos).y][i] != ',')
 			perror_exit("color format not valid", data);
 	numbers = ft_split(array[(*pos).y] + (*pos).x, ',');
-	//if (arraylen(numbers) != 3)
-	//	perror_exit("color format not valid", data);
+	if (arraysize(numbers) != 3)
+		perror_exit("color format not valid", data);
 	i = -1;
 	while (++i < 3)
 	{
@@ -192,17 +115,17 @@ void	get_elements(t_data *data, char **array, t_ipos *pos)
 			count--;
 			continue ;
 		}
-		if (!data->north_texture && ft_strncmp(array[(*pos).y], "NO ", 3))
+		if (!data->north_texture && !ft_strncmp(array[(*pos).y], "NO ", 3))
 			get_texture(data, &data->north_texture, array, pos);
-		else if (!data->south_texture && ft_strncmp(array[(*pos).y], "SO ", 3))
+		else if (!data->south_texture && !ft_strncmp(array[(*pos).y], "SO ", 3))
 			get_texture(data, &data->south_texture, array, pos);
-		else if (!data->east_texture && ft_strncmp(array[(*pos).y], "EA ", 3))
+		else if (!data->east_texture && !ft_strncmp(array[(*pos).y], "EA ", 3))
 			get_texture(data, &data->east_texture, array, pos);
-		else if (!data->west_texture && ft_strncmp(array[(*pos).y], "WE ", 3))
+		else if (!data->west_texture && !ft_strncmp(array[(*pos).y], "WE ", 3))
 			get_texture(data, &data->west_texture, array, pos);
-		else if (ft_strncmp(array[(*pos).y], "F ", 2))
+		else if (data->floor_rgb[0] == -1 && !ft_strncmp(array[(*pos).y], "F ", 2))
 			get_rgb(data, data->floor_rgb, array, pos);
-		else if (ft_strncmp(array[(*pos).y], "C ", 2))
+		else if (data->ceiling_rgb[0] == -1 && !ft_strncmp(array[(*pos).y], "C ", 2))
 			get_rgb(data, data->ceiling_rgb, array, pos);
 		else
 			perror_exit("invalid prefix on element line" , data);
@@ -250,11 +173,13 @@ t_data	*create_data(char *infile)
 	data = ft_calloc(sizeof(t_data), 1);
 	if (!data)
 		perror_exit("data allocation failed", NULL);
+	data->floor_rgb[0] = -1;
+	data->ceiling_rgb[0] = -1;
 	pos.y = -1;
 	get_elements(data, array, &pos);
 	while (ignore_whitespace(array, &pos))
 		pos.y++;
-	//get_map(data, array, pos);
+	get_map(data, array, pos);
 	free_array(array);
 	init_keylist(data);
 	return (data);

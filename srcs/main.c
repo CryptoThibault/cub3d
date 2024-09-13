@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:55:10 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/12 16:52:30 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/13 15:21:58 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	main(int ac, char **av)
 	printf("WE %s\n", data->west_texture);
 	printf("F %d,%d,%d\n", data->floor_rgb[0], data->floor_rgb[1],  data->floor_rgb[2]);
 	printf("C %d,%d,%d\n\n", data->ceiling_rgb[0], data->ceiling_rgb[1],  data->ceiling_rgb[2]);
-	//print_array(data->map);
+	print_array(data->map);
 
-	//check_map(data);
-	//printf("Check done!\n");
+	check_map(data);
+	printf("Check done!\n");
 
 	create_window(data);
 	//load_textures(data);

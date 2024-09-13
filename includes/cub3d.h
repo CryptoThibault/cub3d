@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/12 20:21:54 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/13 16:30:32 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 
 # define _USE_MATH_DEFINES
 # define PLAYER_RAD 0.2
-# define POS_MVT 0.1
-# define DIR_MVT 0.1
+# define POS_MVT 0.001
+# define DIR_MVT 0.001
 
 typedef struct	s_ipos
 {
@@ -52,13 +52,12 @@ typedef struct	s_data
 	int		floor_rgb[3];
 	int		ceiling_rgb[3];
 	char	**map;
-	t_fpos	map_size;
+	t_ipos	map_size;
 	t_fpos	player_pos;
 	float	player_dir;
 	int		keylist[6];
-	int		keypress[65364];
+	int		keypress[XK_Right + 1];
 }		t_data;
-
 
 void	perror_exit(char *msg, t_data *data);
 void	free_data(t_data *data);
