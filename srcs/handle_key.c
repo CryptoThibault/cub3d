@@ -14,27 +14,24 @@
 
 void	update_position(t_data *data, int xdir, int ydir, int *render)
 {
-	t_fpos	amount;
+	t_fpos	move;
 
-	amount.x = POS_MVT * xdir;
-	amount.y = POS_MVT * ydir;
-
-	if (data->map[(int)data->player_pos.y][(int)(data->player_pos.x + amount.x)] != '1'
-		&& data->map[(int)(data->player_pos.y + amount.y)][(int)data->player_pos.x] != '1')
-	{
-		data->player_pos.x += amount.x;
-		data->player_pos.y += amount.y;
-	}
+	move.x = (xdir * cos(data->player_dir) - ydir * sin(data->player_dir)) * SPEED;
+	move.y = (xdir * sin(data->player_dir) + ydir * cos(data->player_dir)) * SPEED;	
+	if (data->map[(int)data->player_pos.y][(int)(data->player_pos.x + move.x)] != '1')
+		data->player_pos.x += move.x;
+	if (data->map[(int)(data->player_pos.y + move.y)][(int)data->player_pos.x] != '1')
+		data->player_pos.y += move.y;
 	*render = 1;
 }
 
-void	update_direction(float *dir, float amount, int *render)
+void	update_direction(float *dir, float vel, int *render)
 {
-	if (*dir + amount < 0)
+	if (*dir + vel < 0)
 		*dir += 2;
-	if (*dir + amount >= 2)
+	if (*dir + vel >= 2)
 		*dir -= 2;
-	*dir += amount;
+	*dir += vel;
 	*render = 1;
 }
 
@@ -99,9 +96,9 @@ int	handle_key(t_data *data)
 	if (data->keypress[XK_d])
 		update_position(data, 1, 0, &render);
 	if (data->keypress[XK_Left])
-		update_direction(&data->player_dir, -DIR_MVT, &render);
+		update_direction(&data->player_dir, -VELOCITY, &render);
 	if (data->keypress[XK_Right])
-		update_direction(&data->player_dir, DIR_MVT, &render);
+		update_direction(&data->player_dir, VELOCITY, &render);
 	if (render)
 		update_screen(data);
 	return (0);

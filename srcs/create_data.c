@@ -107,14 +107,11 @@ void	get_elements(t_data *data, char **array, t_ipos *pos)
 	int	count;
 
 	count = 0;
-	while (array[++(*pos).y] && count++ < 6)
+	while (array[++(*pos).y] && count < 6)
 	{
 		(*pos).x = 0;
 		if (ignore_whitespace(array, pos))
-		{
-			count--;
 			continue ;
-		}
 		if (!data->north_texture && !ft_strncmp(array[(*pos).y], "NO ", 3))
 			get_texture(data, &data->north_texture, array, pos);
 		else if (!data->south_texture && !ft_strncmp(array[(*pos).y], "SO ", 3))
@@ -129,6 +126,7 @@ void	get_elements(t_data *data, char **array, t_ipos *pos)
 			get_rgb(data, data->ceiling_rgb, array, pos);
 		else
 			perror_exit("invalid prefix on element line" , data);
+		count++;
 	}
 }
 

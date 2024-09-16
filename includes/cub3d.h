@@ -22,9 +22,9 @@
 # include <X11/X.h>
 
 # define _USE_MATH_DEFINES
-# define PLAYER_RAD 0.2
-# define POS_MVT 0.001
-# define DIR_MVT 0.001
+# define RADIUS 0.2
+# define SPEED 0.001
+# define VELOCITY 0.001
 
 typedef struct	s_ipos
 {

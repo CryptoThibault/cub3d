@@ -14,7 +14,7 @@ NAME = cub3D
 
 CC = cc
 FLAGS = -Wall -Wextra -Werror -Iincludes
-LFLAGS = -L${MLX} -L${LIBFT} -lmlx -lX11 -lXext -lft -lm
+LFLAGS = -L${MLX} -lmlx -lX11 -lXext -lm
 LIBFT = libft
 MLX = mlx
 
@@ -25,7 +25,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)/$(LIBFT).a $(MLX)/lib$(MLX).a
-	$(CC) $(FLAGS) $(LFLAGS) -o $@ $^
+	$(CC) $(FLAGS) -o $@ $^ ${LFLAGS}
 
 $(LIBFT)/$(LIBFT).a:
 	make -C $(LIBFT)
