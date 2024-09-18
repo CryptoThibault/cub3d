@@ -42,6 +42,8 @@ void	free_array(char **array)
 
 void	free_data(t_data *data)
 {
+	if (data->array)
+		free_array(data->array);
 	free(data->north_texture);
 	free(data->south_texture);
 	free(data->east_texture);

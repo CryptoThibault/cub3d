@@ -13,10 +13,10 @@
 NAME = cub3D
 
 CC = cc
-FLAGS = -Wall -Wextra -Werror -Iincludes
-LFLAGS = -L${MLX} -lmlx -lX11 -lXext -lm
 LIBFT = libft
 MLX = mlx
+FLAGS = -Wall -Wextra -Werror -Iincludes
+LFLAGS = -L${MLX} -lmlx -lX11 -lXext -lm
 
 SRCS = srcs/main.c srcs/create_data.c srcs/check_map.c srcs/perror_exit.c \
        srcs/create_window.c srcs/load_textures.c srcs/run_game.c srcs/handle_key.c

@@ -14,13 +14,24 @@
 
 void	update_position(t_data *data, int xdir, int ydir, int *render)
 {
+	float	dir_radians;
 	t_fpos	move;
+	t_fpos	radius;
 
-	move.x = (xdir * cos(data->player_dir) - ydir * sin(data->player_dir)) * SPEED;
-	move.y = (xdir * sin(data->player_dir) + ydir * cos(data->player_dir)) * SPEED;	
-	if (data->map[(int)data->player_pos.y][(int)(data->player_pos.x + move.x)] != '1')
+	dir_radians = data->player_dir * M_PI;
+	move.x = (xdir * cos(dir_radians) - ydir * sin(dir_radians)) * SPEED;
+	move.y = (xdir * sin(dir_radians) + ydir * cos(dir_radians)) * SPEED;	
+	radius.x = RADIUS;
+	radius.y = RADIUS;
+	if (move.x < 0)
+		radius.x = -RADIUS;
+	if (move.y < 0)
+		radius.y = -RADIUS;
+	if (data->map[(int)data->player_pos.y]
+		[(int)(data->player_pos.x + move.x + radius.x)] != '1')
 		data->player_pos.x += move.x;
-	if (data->map[(int)(data->player_pos.y + move.y)][(int)data->player_pos.x] != '1')
+	if (data->map[(int)(data->player_pos.y + move.y + radius.y)]
+		[(int)data->player_pos.x] != '1')
 		data->player_pos.y += move.y;
 	*render = 1;
 }

@@ -45,6 +45,7 @@ typedef struct	s_data
 	t_ipos	win_size;
 	void	*textures[4];
 	t_ipos	tex_size;
+	char	**array;
 	char	*north_texture;
 	char	*south_texture;
 	char	*west_texture;
