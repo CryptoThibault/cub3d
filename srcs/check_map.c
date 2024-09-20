@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 17:41:17 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/19 12:15:35 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/20 13:40:48 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	set_player(t_data *data, t_ipos pos, char symbol, char **char_list)
 	data->player_pos.x = pos.x + 0.5;
 	data->player_pos.y = pos.y + 0.5;
 	if (symbol == 'N')
-		data->player_dir = 0;
-	else if (symbol == 'S')
-		data->player_dir = 1;
-	else if (symbol == 'E')
-		data->player_dir = 0.5;
-	else if (symbol == 'W')
 		data->player_dir = 1.5;
+	else if (symbol == 'S')
+		data->player_dir = 0.5;
+	else if (symbol == 'E')
+		data->player_dir = 0;
+	else if (symbol == 'W')
+		data->player_dir = 1;
 }
 
 void	check_outlines(t_data *data, t_ipos pos)

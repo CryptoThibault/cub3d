@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/20 11:37:53 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/20 16:55:02 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@
 # define VELOCITY 0.001
 # define FOV 1 / 3
 # define FOV_RADIANS FOV * M_PI
-# define PIX_BTW_RAYS 1 //nb of pix per column, btw 2 rays
+# define PIX_BTW_RAYS 500 //nb of pix per column, btw 2 rays
 
-# define TILE_SIZE	32
+# define TILE_SIZE 32
 //# define MAP_NUM_ROWS 14
 //# define MAP_NUM_COLS 33
 //# define WINDOW_HEIGHT MAP_NUM_ROWS * TILE_SIZE
@@ -87,5 +87,9 @@ int		handle_key(t_data *data);
 int		handle_keypress(int keysym, t_data *data);
 int		handle_keyrelease(int keysym, t_data *data);
 int		close_window(t_data *data);
+float	normalize_angle(float angle);
+int		is_wall(t_data *data, t_fpos	pos);
+int		is_in_map(t_data *data, t_fpos	pos);
+float	*raycasting(t_data	*data);
 
 #endif
