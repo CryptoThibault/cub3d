@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/20 16:55:02 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/23 18:12:36 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,6 @@
 # define PIX_BTW_RAYS 500 //nb of pix per column, btw 2 rays
 
 # define TILE_SIZE 32
-//# define MAP_NUM_ROWS 14
-//# define MAP_NUM_COLS 33
-//# define WINDOW_HEIGHT MAP_NUM_ROWS * TILE_SIZE
-//# define WINDOW_WIDTH MAP_NUM_COLS * TILE_SIZE
 
 # ifndef M_PI
 #    define M_PI 3.14159265358979323846
@@ -50,6 +46,12 @@ typedef struct	s_fpos
 	float	x;
 	float	y;
 }		t_fpos;
+
+typedef struct s_ray
+{
+	float	distance;
+	int		orientation;
+}	t_ray;
 
 typedef struct	s_data
 {
@@ -90,6 +92,7 @@ int		close_window(t_data *data);
 float	normalize_angle(float angle);
 int		is_wall(t_data *data, t_fpos	pos);
 int		is_in_map(t_data *data, t_fpos	pos);
-float	*raycasting(t_data	*data);
+void	render(t_data	*data);
+int		direction(float angle);
 
 #endif

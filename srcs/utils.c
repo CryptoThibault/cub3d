@@ -47,3 +47,14 @@ int	is_in_map(t_data *data, t_fpos	pos)
 		return (0);
 	}
 }
+int	direction(float angle)
+{
+	if (angle >= 0 && angle < 0.5)
+		return (0);
+	else if (angle >= 0.5 && angle < 1)
+		return (1);
+	else if (angle >= 1 && angle < 1.5)
+		return (2);
+	if (angle >= 1.5 && angle < 2)
+		return (3);
+}
