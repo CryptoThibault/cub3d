@@ -125,7 +125,7 @@ void	render(t_data	*data)
 	float ray_angle;
 	float	ray_angle_incr;//de cbien s'incr le ray_angle entre chaq ray
 	t_ray	*ray;
-	//float	*ray_length;
+
 
 	/*
 	t_fpos	intersection_point;
