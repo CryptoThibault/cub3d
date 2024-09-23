@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/20 11:37:53 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:02:05 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,9 @@ int		handle_key(t_data *data);
 int		handle_keypress(int keysym, t_data *data);
 int		handle_keyrelease(int keysym, t_data *data);
 int		close_window(t_data *data);
+float	normalize_angle(float angle);
+int		is_wall(t_data *data, t_fpos	pos);
+int		is_in_map(t_data *data, t_fpos	pos);
+float	*raycasting(t_data	*data);
 
 #endif
