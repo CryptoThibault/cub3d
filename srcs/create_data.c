@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:55:02 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/13 17:37:52 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/23 18:13:18 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	get_line_count(int fd)
 
 int	ignore_whitespace(char **array, t_ipos *pos)
 {
-	if (!ft_strlen(array[(*pos).y]))
+	if (!array[(*pos).y] || !ft_strlen(array[(*pos).y]))
 		return (1);
 	while (array[(*pos).y][(*pos).x])
 	{
@@ -123,6 +123,7 @@ void	get_elements(t_data *data, char **array, t_ipos *pos)
 	int	count;
 
 	count = 0;
+	(*pos).y = -1;
 	while (array[++(*pos).y] && count < 6)
 	{
 		(*pos).x = 0;
@@ -188,7 +189,6 @@ t_data	*create_data(char *infile)
 	data->array = read_infile(data, infile);
 	data->floor_rgb[0] = -1;
 	data->ceiling_rgb[0] = -1;
-	pos.y = -1;
 	get_elements(data, data->array, &pos);
 	while (ignore_whitespace(data->array, &pos))
 		pos.y++;

@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/23 12:02:05 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/23 15:39:27 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,11 @@
 # define RADIUS 0.2
 # define SPEED 0.001
 # define VELOCITY 0.001
+
 # define FOV 1 / 3
 # define FOV_RADIANS FOV * M_PI
-# define PIX_BTW_RAYS 1 //nb of pix per column, btw 2 rays
-
+# define PIX_BTW_RAYS 500
 # define TILE_SIZE	32
-//# define MAP_NUM_ROWS 14
-//# define MAP_NUM_COLS 33
-//# define WINDOW_HEIGHT MAP_NUM_ROWS * TILE_SIZE
-//# define WINDOW_WIDTH MAP_NUM_COLS * TILE_SIZE
-
-# ifndef M_PI
-#    define M_PI 3.14159265358979323846
-# endif
 
 typedef struct	s_ipos
 {

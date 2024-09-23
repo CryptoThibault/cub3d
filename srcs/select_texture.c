@@ -1,35 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   select_texture.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchalaou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/23 17:19:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/23 17:21:02 by tchalaou         ###   ########.fr       */
+/*   Created: 2024/09/23 16:01:19 by tchalaou          #+#    #+#             */
+/*   Updated: 2024/09/23 17:02:35 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-
-int	is_wall(t_data *data, t_fpos pos)
+int	select_texture(float dir, int ori)
 {
-	return (data->map[(int)pos.y][(int)pos.x] == '1');
-}
-
-float	normalize_angle(float angle)
-{
-	float	normed_angle;
-
-	normed_angle = angle;
-	if (angle < 0)
-		normed_angle += 2;
-	if (angle >= 2)
-		normed_angle -= 2;
-	return (normed_angle);
-}
-
-int	is_in_map(t_data *data, t_fpos	pos)
-{
-	return (!!ft_strchr("01NSEW", data->map[(int)pos.y][(int)pos.x]));
+	if ((dir >= 1 && dir < 1.5 && ori) || (dir >= 1.5 && dir < 2 && ori))
+		return (0);
+	else if ((dir >= 0 && dir < 0.5 && ori) || (dir >= 0.5 && dir < 1 && ori))
+		return (1);
+	else if ((dir >= 0.5 && dir < 1 && !ori) || (dir >= 1 && dir < 1.5 && !ori))
+		return (2);
+	else if ((dir >= 0 && dir < 0.5 && !ori) || (dir >= 1.5 && dir < 2 && !ori))
+		return (3);
 }
