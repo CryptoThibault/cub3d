@@ -99,13 +99,13 @@ int	handle_key(t_data *data)
 
 	render = 0;
 	if (data->keypress[XK_w])
-		update_position(data, 0, -1, &render);
-	if (data->keypress[XK_s])
-		update_position(data, 0, 1, &render);
-	if (data->keypress[XK_a])
-		update_position(data, -1, 0, &render);
-	if (data->keypress[XK_d])
 		update_position(data, 1, 0, &render);
+	if (data->keypress[XK_s])
+		update_position(data, -1, 0, &render);
+	if (data->keypress[XK_a])
+		update_position(data, 0, -1, &render);
+	if (data->keypress[XK_d])
+		update_position(data, 0, 1, &render);
 	if (data->keypress[XK_Left])
 		update_direction(&data->player_dir, -VELOCITY, &render);
 	if (data->keypress[XK_Right])
