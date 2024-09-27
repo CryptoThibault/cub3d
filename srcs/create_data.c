@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:55:02 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/20 12:48:54 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:21:24 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ int	get_line_count(int fd)
 
 int	ignore_whitespace(char **array, t_ipos *pos)
 {
-	if (!ft_strlen(array[(*pos).y]))
+	if (!ft_strlen(array[pos->y]))
 		return (1);
-	while (array[(*pos).y][(*pos).x])
+	while (array[pos->y][pos->x])
 	{
-		if (!ft_strchr(" \t\v\r\f", array[(*pos).y][(*pos).x]))
+		if (!ft_strchr(" \t\v\r\f", array[pos->y][pos->x]))
 			return (0);
-		(*pos).x++;
+		pos->x++;
 	}
 	return (1);
 }
@@ -84,9 +84,9 @@ void	check_texture(t_data *data, char *texture, char c)
 
 void	get_texture(t_data *data, char **texture, char **array, t_ipos *pos)
 {
-	(*pos).x += 2;
+	pos->x += 2;
 	ignore_whitespace(array, pos);
-	*texture = ft_strdup(array[(*pos).y] + (*pos).x);
+	*texture = ft_strdup(array[pos->y] + pos->x);
 	check_texture(data, *texture, ' ');
 	check_texture(data, *texture, '\t');
 	check_texture(data, *texture, '\v');
@@ -99,13 +99,13 @@ void	get_rgb(t_data *data, int rgb[3], char **array, t_ipos *pos)
 	char	**numbers;
 	int		i;
 
-	(*pos).x++;
+	pos->x++;
 	ignore_whitespace(array, pos);
-	i = (*pos).x - 1;
-	while (array[(*pos).y][++i])
-		if (!ft_isdigit(array[(*pos).y][i]) && array[(*pos).y][i] != ',')
+	i = pos->x - 1;
+	while (array[pos->y][++i])
+		if (!ft_isdigit(array[pos->y][i]) && array[pos->y][i] != ',')
 			perror_exit("color format not valid", data);
-	numbers = ft_split(array[(*pos).y] + (*pos).x, ',');
+	numbers = ft_split(array[pos->y] + pos->x, ',');
 	if (array_size(numbers) != 3)
 		perror_exit("color format not valid", data);
 	i = -1;
@@ -123,27 +123,30 @@ void	get_elements(t_data *data, char **array, t_ipos *pos)
 	int	count;
 
 	count = 0;
-	while (array[++(*pos).y] && count < 6)
+	pos->y = -1;
+	while (array[++pos->y] && count < 6)
 	{
-		(*pos).x = 0;
+		pos->x = 0;
 		if (ignore_whitespace(array, pos))
 			continue ;
-		if (!data->north_texture && !ft_strncmp(array[(*pos).y], "NO", 2))
+		if (!data->north_texture && !ft_strncmp(array[pos->y], "NO", 2))
 			get_texture(data, &data->north_texture, array, pos);
-		else if (!data->south_texture && !ft_strncmp(array[(*pos).y], "SO", 2))
+		else if (!data->south_texture && !ft_strncmp(array[pos->y], "SO", 2))
 			get_texture(data, &data->south_texture, array, pos);
-		else if (!data->east_texture && !ft_strncmp(array[(*pos).y], "EA", 2))
+		else if (!data->east_texture && !ft_strncmp(array[pos->y], "EA", 2))
 			get_texture(data, &data->east_texture, array, pos);
-		else if (!data->west_texture && !ft_strncmp(array[(*pos).y], "WE", 2))
+		else if (!data->west_texture && !ft_strncmp(array[pos->y], "WE", 2))
 			get_texture(data, &data->west_texture, array, pos);
-		else if (data->floor_rgb[0] == -1 && !ft_strncmp(array[(*pos).y], "F", 1))
+		else if (data->floor_rgb[0] == -1 && !ft_strncmp(array[pos->y], "F", 1))
 			get_rgb(data, data->floor_rgb, array, pos);
-		else if (data->ceiling_rgb[0] == -1 && !ft_strncmp(array[(*pos).y], "C", 1))
+		else if (data->ceiling_rgb[0] == -1 && !ft_strncmp(array[pos->y], "C", 1))
 			get_rgb(data, data->ceiling_rgb, array, pos);
 		else
 			perror_exit("invalid prefix on element line" , data);
 		count++;
 	}
+	if (count < 6)
+		perror_exit("not all element line have been read", data);
 }
 
 char	**read_infile(t_data *data, char *infile)
@@ -188,9 +191,8 @@ t_data	*create_data(char *infile)
 	data->array = read_infile(data, infile);
 	data->floor_rgb[0] = -1;
 	data->ceiling_rgb[0] = -1;
-	pos.y = -1;
 	get_elements(data, data->array, &pos);
-	while (ignore_whitespace(data->array, &pos))
+	while (data->array[pos.y] && ignore_whitespace(data->array, &pos))
 		pos.y++;
 	get_map(data, data->array, pos);
 	init_keylist(data);

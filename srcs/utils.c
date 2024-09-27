@@ -1,19 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/23 17:19:56 by tchalaou          #+#    #+#             */
+/*   Updated: 2024/09/27 15:21:41 by achevron         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	is_wall(t_data *data, t_fpos	pos)
+int	is_wall(t_data *data, t_fpos pos)
 {
-	int	x;
-	int	y;
-
-	x = floor(pos.x);
-	y = floor(pos.y);
-	//printf("is wall func / before if else\n");
-	if (data->map[y][x] == '1')
-		return (1);
-	else
-		return (0);
+	return (data->map[(int)pos.y][(int)pos.x] == '1');
 }
+
 float	normalize_angle(float angle)
 {
 	float	normed_angle;
@@ -28,33 +31,5 @@ float	normalize_angle(float angle)
 
 int	is_in_map(t_data *data, t_fpos	pos)
 {
-	int	x;
-	int	y;
-	char	*char_list;
-
-	char_list = ft_strdup("01NSEW");
-	x = floor(pos.x);
-	y = floor(pos.y);
-	//printf("is in map func / before if else\n");
-	if (ft_strchr(char_list, data->map[y][x]))
-	{
-		free(char_list);
-		return (1);
-	}
-	else
-	{
-		free(char_list);
-		return (0);
-	}
-}
-int	direction(float angle)
-{
-	if (angle >= 0 && angle < 0.5)
-		return (0);
-	else if (angle >= 0.5 && angle < 1)
-		return (1);
-	else if (angle >= 1 && angle < 1.5)
-		return (2);
-	if (angle >= 1.5 && angle < 2)
-		return (3);
+	return (!!ft_strchr("01NSEW", data->map[(int)pos.y][(int)pos.x]));
 }

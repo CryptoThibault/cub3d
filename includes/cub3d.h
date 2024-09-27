@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/23 18:12:36 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:20:16 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@
 # define RADIUS 0.2
 # define SPEED 0.001
 # define VELOCITY 0.001
+
 # define FOV 1 / 3
 # define FOV_RADIANS FOV * M_PI
+# define PIX_BTW_RAYS 500
+# define TILE_SIZE	32
 # define PIX_BTW_RAYS 500 //nb of pix per column, btw 2 rays
 
 # define TILE_SIZE 32
