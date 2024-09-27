@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:26:11 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/23 18:00:10 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:33:48 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	load_textures(t_data *data)
 {
-	data->textures[3] = mlx_xpm_file_to_image(data->mlx_ptr, data->north_texture,
+	data->textures[0] = mlx_xpm_file_to_image(data->mlx_ptr, data->north_texture,
 			&data->tex_size.x, &data->tex_size.y);
 	if (!data->textures[3])
 		perror_exit("failed to load texture", data);
@@ -26,7 +26,7 @@ void	load_textures(t_data *data)
 			&data->tex_size.x, &data->tex_size.y);
 	if (!data->textures[2])
 		perror_exit("failed to load texture", data);
-	data->textures[0] = mlx_xpm_file_to_image(data->mlx_ptr, data->east_texture,
+	data->textures[3] = mlx_xpm_file_to_image(data->mlx_ptr, data->east_texture,
 			&data->tex_size.x, &data->tex_size.y);
 	if (!data->textures[0])
 		perror_exit("failed to load texture", data);
