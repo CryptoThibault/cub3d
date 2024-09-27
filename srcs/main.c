@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:55:10 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/13 15:21:58 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:42:23 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int ac, char **av)
 	print_data(data); /*REMOVE*/
 	check_map(data);
 	create_window(data);
-	//load_textures(data);
+	load_textures(data);
 	run_game(data);
 	free_data(data);
 	return (EXIT_SUCCESS);

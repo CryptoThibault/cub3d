@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/27 15:33:10 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:58:19 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define FOV_RADIANS FOV * M_PI
 # define PIX_BTW_RAYS 500
 # define TILE_SIZE 32
-# define PIX_BTW_RAYS 500
+# define RAY_SIZE 500
 
 # define TILE_SIZE 32
 
@@ -46,11 +46,12 @@ typedef struct	s_fpos
 	float	y;
 }		t_fpos;
 
-typedef struct s_ray
+typedef struct s_inter
 {
-	float	distance;
-	int		orientation;
-}	t_ray;
+	t_fpos	pos;
+	int		orient;
+	float	angle;
+}		t_inter;
 
 typedef struct	s_data
 {
