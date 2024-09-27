@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:19:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/27 15:21:41 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/30 11:11:27 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,20 @@ float	normalize_angle(float angle)
 int	is_in_map(t_data *data, t_fpos	pos)
 {
 	return (!!ft_strchr("01NSEW", data->map[(int)pos.y][(int)pos.x]));
+}
+
+int	orientation(float angle)
+{
+	int	direction;
+
+	direction = 0;
+	if (angle >= 0 && angle < 0.5)//R down +x +y
+		direction = 0;
+	if (angle >= 0.5 && angle < 1)//L down -x +y
+		direction = 1;
+	if (angle >= 1 && angle < 1.5)//L up -x -y
+		direction = 2;
+	if (angle >= 1.5 && angle < 2)//R up +x -y
+		direction = 3;
+	return (direction);
 }

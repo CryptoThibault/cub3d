@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/27 17:58:19 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/09/30 11:54:04 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,9 @@ typedef struct	s_fpos
 typedef struct s_inter
 {
 	t_fpos	pos;
-	int		orient;
+	int		orient;//0 vertical 1 horizontal
 	float	angle;
+	float	distance;
 }		t_inter;
 
 typedef struct	s_data
@@ -92,7 +93,8 @@ int		close_window(t_data *data);
 float	normalize_angle(float angle);
 int		is_wall(t_data *data, t_fpos pos);
 int		is_in_map(t_data *data, t_fpos	pos);
+int		orientation(float angle);
 void	render(t_data *data);
-int		direction(float angle);
+void	render_column(t_data *data, t_inter inter, int ray);
 
 #endif
