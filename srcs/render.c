@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:49:19 by achevron          #+#    #+#             */
-/*   Updated: 2024/09/30 13:50:38 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:04:21 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	raycast(t_data *data, t_inter *inter, int i)
 	t_ipos	dir_factor;
 	int		frame;
 
-	frame = ientation (inter->angle);
+	frame = orientation(inter->angle);
 	/*
 	if (orientation (inter->angle) == 0)
 	{
