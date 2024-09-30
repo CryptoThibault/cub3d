@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/30 14:44:40 by achevron         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:20:21 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@
 # define TILE_SIZE 32
 # define RAY_SIZE 500
 
-# define TILE_SIZE 32
-
 typedef struct	s_ipos
 {
 	int	x;
@@ -49,7 +47,7 @@ typedef struct	s_fpos
 typedef struct s_inter
 {
 	t_fpos	pos;
-	int		orient;//0 vertical 1 horizontal
+	int		orient;
 	float	angle;
 	float	distance;
 }		t_inter;
