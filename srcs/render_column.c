@@ -16,7 +16,8 @@ int	get_height(t_data *data, t_inter inter)
 {
 	int	height;
 
-	height = data->win_size.y;
+	//inter.distance, TILE_SIZE, data->tex_size[select_texture()]
+	height = TILE_SIZE;
 	height *= cos(inter.angle);
 	return height;
 }

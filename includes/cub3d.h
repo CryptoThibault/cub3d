@@ -58,7 +58,7 @@ typedef struct	s_data
 	void	*win_ptr;
 	t_ipos	win_size;
 	void	*textures[4];
-	t_ipos	tex_size;
+	t_ipos	tex_size[4];
 	char	**array;
 	char	*north_texture;
 	char	*south_texture;
