@@ -16,63 +16,78 @@ int	get_height(t_data *data, t_inter inter)
 {
 	int	height;
 
-	//inter.distance, TILE_SIZE, data->tex_size[select_texture()]
+	// Get wall height from $inter.distance, win_size.y and
+	// $data->tex_size[select_texture(data->player_dir, inter_orient)]
 	height = TILE_SIZE;
-	height *= cos(inter.angle);
+	height *= cos(inter.angle); // Remove rounded perception
 	return height;
 }
 
-int	get_color(int rgb[3])
+int	rgb_to_int(int rgb[3])
 {
-	uint8_t	bytes[3];
-	uint32_t color;
+	int color;
 
-	bytes[0] = (uint8_t)rgb[0];
-	bytes[1] = (uint8_t)rgb[1];
-	bytes[2] = (uint8_t)rgb[2];
-	color = 0 | (bytes[0] << 8) | (bytes[1] << 16) | (bytes[2] << 24);
-	return ((int)color);
+	color = 0;
+	color |= (rgb[2] & 0xFF); 
+	color |= (rgb[1] & 0xFF) << 8;
+	color |= (rgb[0] & 0xFF) << 16;
+	color |= 0xFF << 24;
+	return (color);
 }
 
-int	select_pixel(t_data *data, t_inter inter, int height, int tex_y)
+int	select_pixel(t_data *data, void *texture, int tex_x, int tex_y)
 {
-	int	tex_x;
+	int	bpp;
+	int	size_line;
+	int	endian;
+	char	*buffer;
+	int	pixel_pos;
+
+	buffer = mlx_get_data_addr(texture, &bpp, &size_line, &endian);
+	pixel_pos = ((y * tex_y) / data->win_y) * size_line
+		+ ((x * tex_x) / (data->win_x / 2)) * (bpp / 8);
+	return (*(int *)(data + pixel_pos));
+}
+
+int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
+{
+	int		tex_x;
 	void	*texture;
-	uint32_t color;
+	int		color;
 
 	if (inter.orient)
 		tex_x = inter.pos.x / height;
 	else
 		tex_x = inter.pos.y / height;
 	texture = data->textures[select_texture(data->player_dir, inter.orient)];
-	color = texture[TILE_SIZE * tex_x + tex_y];
-	return ((int)color);
+	return (select_color(data, texture, tex_x, tex_y));
 }
 
 void	render_raw(t_data *data, int ray, t_ipos pos, int color)
 {
-		pos.x = ray * RAY_SIZE;
-		while (pos.x < ray * RAY_SIZE + RAY_SIZE)
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, pos.x++, pos.y++, color);
+	pos.x = ray * RAY_SIZE - 1;
+	while (++pos.x < ray * RAY_SIZE + RAY_SIZE)
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, pos.x, pos.y, color);
 }
 
 void	render_column(t_data *data, t_inter inter, int ray)
 {
+	int		height;
 	t_ipos	pos;
-	int	height;
-	int	color;
+	int		color;
 
 	height = get_height(data, inter);
-	pos.y = 0;
-	color = get_color(data->ceiling_rgb);
-	while (pos.y < (data->win_size.y / 2 - height / 2))
+	pos.y = -1;
+	color = rgb_to_int(data->ceiling_rgb);
+	while (++pos.y < (data->win_size.y / 2 - height / 2) - 1)
 		render_raw(data, ray, pos, color);
-	while (pos.y < (data->win_size.y / 2 + height / 2))
+	while (++pos.y < (data->win_size.y / 2 + height / 2))
 	{
-		color = select_pixel(data, inter, height, pos.y - (data->win_size.y / 2 + height / 2))
+		color = get_pixel_color(data, inter, height,
+			pos.y - (data->win_size.y / 2 + height / 2));
 		render_raw(data, ray, pos, color);
 	}
-	color = get_color(data->floor_rgb);
-	while (pos.y < data->win_size.y)
+	color = rgb_to_int(data->floor_rgb);
+	while (++pos.y < data->win_size.y)
 		render_raw(data, ray, pos, color);
 }

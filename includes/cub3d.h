@@ -25,12 +25,9 @@
 # define RADIUS 0.2
 # define SPEED 0.001
 # define VELOCITY 0.001
-
 # define FOV 1 / 3
 # define FOV_RADIANS FOV * M_PI
-# define PIX_BTW_RAYS 500
-# define TILE_SIZE 32
-# define RAY_SIZE 500
+# define RAY_SIZE 5
 
 typedef struct	s_ipos
 {
