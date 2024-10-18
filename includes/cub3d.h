@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/30 16:20:21 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:21:58 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@
 # define VELOCITY 0.001
 # define FOV 1 / 3
 # define FOV_RADIANS FOV * M_PI
-# define RAY_SIZE 5
+# define RAY_SIZE 1
+
+# define TILE_SIZE 1440
 
 typedef struct	s_ipos
 {
@@ -89,6 +91,7 @@ float	normalize_angle(float angle);
 int		is_wall(t_data *data, t_fpos pos);
 int		is_in_map(t_data *data, t_fpos	pos);
 int		orientation(float angle);
+int	select_texture(float dir, int ori);
 void	render(t_data *data);
 void	render_column(t_data *data, t_inter inter, int ray);
 

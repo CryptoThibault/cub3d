@@ -1,14 +1,10 @@
+NO textures/N-letter.xpm
+SO textures/S-letter.xpm
+EA textures/E-letter.xpm
+WE textures/W-letter.xpm
+
 F 220,100,0
- 	
-  
-SO ./path_to_the_south_texture
-WE 	./path_to_the_west_texture
 C 225,30,0
-
-  
-EA ./path_to_the_east_texture
-
-NO ./path_to_the_north_texture
 
         1111111111111111111111111
         1000000000110000000000001

@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:49:19 by achevron          #+#    #+#             */
-/*   Updated: 2024/09/30 14:04:21 by achevron         ###   ########.fr       */
+/*   Updated: 2024/10/18 16:56:43 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@ float	vert_intersection(t_data *data, t_inter	*inter, int frame)
 	step.x = TILE_SIZE;
 	step.y = angle * TILE_SIZE;
 
+	
+	if (((frame == 1 || frame == 2) && step.x > 0) 
+		|| ((frame == 3 || frame == 0) && step.x < 0))
+		step.x *= -1;
+	step.y = TILE_SIZE;
+	if (frame == 2 || frame == 3)
+		step.y *= -1;
+	
 	cross_pt.x = data->player_pos.x + ((data->player_pos.y - cross_pt.y) / tan(angle));
 	cross_pt.y = (floor(data->player_pos.y / TILE_SIZE)) * TILE_SIZE;	
 
@@ -59,7 +67,7 @@ float	vert_intersection(t_data *data, t_inter	*inter, int frame)
 	inter->pos.x = cross_pt.x;
 	inter->pos.y = cross_pt.y;
 	printf("vertical intersection point is x : %f y: %f\n", cross_pt.x, cross_pt.y);
-	distance = abs(inter->pos.y - data->player_pos.y) / (sin(angle));
+	distance = fabsf(inter->pos.y - data->player_pos.y) / (sin(angle));
 	//printf("vertical distance : %f\n", distance);
 	return distance;
 }
@@ -80,7 +88,6 @@ float	horiz_intersection(t_data *data, t_inter *inter, int frame)
 	if (frame == 2 || frame == 3)
 		step.y *= -1;
 
-
 	cross_pt.x = data->player_pos.x + ((data->player_pos.y - cross_pt.y) / tan(angle));
 	cross_pt.y = (floor(data->player_pos.y / TILE_SIZE)) * TILE_SIZE;;
 	
@@ -93,7 +100,7 @@ float	horiz_intersection(t_data *data, t_inter *inter, int frame)
 	}
 	inter->pos.x = cross_pt.x;
 	inter->pos.y = cross_pt.y;
-	distance = abs(inter->pos.y - data->player_pos.y) / (sin(angle));
+	distance = fabsf(inter->pos.y - data->player_pos.y) / (sin(angle));
 	printf("horizontal intersection point is x : %f y: %f\n", cross_pt.x, cross_pt.y);
 	//printf("horizontal distance : %f\n", distance);
 	return distance;
@@ -103,32 +110,10 @@ void	raycast(t_data *data, t_inter *inter, int i)
 {
 	float	vert_distance;
 	float	horiz_distance;
-	t_ipos	dir_factor;
 	int		frame;
 
+	(void)i;
 	frame = orientation(inter->angle);
-	/*
-	if (orientation (inter->angle) == 0)
-	{
-		dir_factor.x = 1;
-		dir_factor.y = 1;
-	}
-	else if (orientation (inter->angle) == 1)
-	{
-		dir_factor.x = -1;
-		dir_factor.y = 1;
-	}
-	else if (orientation (inter->angle) == 2)
-	{
-		dir_factor.x = -1;
-		dir_factor.y = -1;
-	}
-	if (orientation (inter->angle) == 3)
-	{
-		dir_factor.x = 1;
-		dir_factor.y = -1;
-	}
-	*/
 	vert_distance = vert_intersection(data, inter, frame);
 	horiz_distance = horiz_intersection(data, inter, frame);
 	if (vert_distance <= horiz_distance)
@@ -152,7 +137,9 @@ void	render(t_data	*data)
 
 
 	nb_of_rays =  data->win_size.x / RAY_SIZE;
-	//1st, left most ray //malloc ?
+	inter = malloc(sizeof(t_inter));
+	if (!inter)
+		perror_exit("inter struct allocation failed", data);
 	inter->angle = normalize_angle(data->player_dir - (FOV / 2));
 	ray_angle_incr = FOV / nb_of_rays;
 	i = 0;
@@ -189,4 +176,5 @@ void	render(t_data	*data)
 		inter->angle += ray_angle_incr;
 		i++;
 	}
+	free(inter);
 }

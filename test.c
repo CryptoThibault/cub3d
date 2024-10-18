@@ -9,7 +9,7 @@ int	main(void)
 	void	*win_ptr = mlx_new_window(mlx_ptr, win_x / 2, win_y, "Test");
 	int	tex_x;
 	int	tex_y;
-	void	*texture = mlx_xpm_file_to_image(mlx_ptr, "textures/N-letter.xpm", &tex_x, &tex_y);
+	void	*texture = mlx_xpm_file_to_image(mlx_ptr, "textures/-letter.xpm", &tex_x, &tex_y);
 
 	int bpp;
 	int size_line;

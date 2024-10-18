@@ -1,7 +1,7 @@
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO textures/N-letter.xpm
+SO textures/S-letter.xpm
+EA textures/E-letter.xpm
+WE textures/W-letter.xpm
 
 F 220,100,0
 
