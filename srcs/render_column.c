@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:18:09 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/10/18 18:24:09 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:35:32 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ int	get_height(t_data *data, t_inter inter)
 {
 	int	height;
 
+	(void)inter;
 	//Get wall height from $inter.distance and data->win_size.y
-	height = data->win_size.y;
-	height *= cos(inter.angle);
+	height = data->win_size.y * 8 / 10;
+	//height *= cos(inter.angle);//arrondir les murs
 	return height;
 }
 
@@ -53,10 +54,8 @@ int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
 	int		tex_x;
 	void	*texture;
 
-	if (inter.orient)
-		tex_x = inter.pos.x / height;
-	else
-		tex_x = inter.pos.y / height;
+	tex_x = 10;
+	tex_y /= height;
 	texture = data->textures[select_texture(data->player_dir, inter.orient)];
 	return (select_pixel(data, texture, tex_x, tex_y));
 }
@@ -81,9 +80,12 @@ void	render_column(t_data *data, t_inter inter, int ray)
 		render_raw(data, ray, pos, color);
 	while (++pos.y < (data->win_size.y / 2 + height / 2))
 	{
-		color = get_pixel_color(data, inter, height,
-			pos.y - (data->win_size.y / 2 + height / 2));
-		render_raw(data, ray, pos, color);
+		pos.x = ray * RAY_SIZE - 1;
+		while (++pos.x < ray * RAY_SIZE + RAY_SIZE)
+		{
+			color = get_pixel_color(data, inter, height, pos.y);
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, pos.x, pos.y, color);
+		}
 	}
 	color = rgb_to_int(data->floor_rgb);
 	while (++pos.y < data->win_size.y)

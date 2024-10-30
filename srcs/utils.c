@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:19:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/30 11:11:27 by achevron         ###   ########.fr       */
+/*   Updated: 2024/10/30 15:55:44 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	is_in_map(t_data *data, t_fpos	pos)
 	return (!!ft_strchr("01NSEW", data->map[(int)pos.y][(int)pos.x]));
 }
 
-int	orientation(float angle)
+int	get_frame(float angle)
 {
 	int	direction;
 

@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/10/18 18:21:58 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/10/30 14:36:01 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define VELOCITY 0.001
 # define FOV 1 / 3
 # define FOV_RADIANS FOV * M_PI
-# define RAY_SIZE 1
+# define RAY_SIZE 192
 
 # define TILE_SIZE 1440
 

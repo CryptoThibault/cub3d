@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:49:19 by achevron          #+#    #+#             */
-/*   Updated: 2024/10/18 16:56:43 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:08:20 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ float	vert_intersection(t_data *data, t_inter	*inter, int frame)
 	angle = normalize_angle(inter->angle);
 	step.x = TILE_SIZE;
 	step.y = angle * TILE_SIZE;
-
 	
 	if (((frame == 1 || frame == 2) && step.x > 0) 
 		|| ((frame == 3 || frame == 0) && step.x < 0))
@@ -106,75 +105,54 @@ float	horiz_intersection(t_data *data, t_inter *inter, int frame)
 	return distance;
 }
 
-void	raycast(t_data *data, t_inter *inter, int i)
+t_inter vert_intersection(t_data *data, float angle, int frame)
 {
-	float	vert_distance;
-	float	horiz_distance;
-	int		frame;
+	t_inter	inter;
 
-	(void)i;
-	frame = orientation(inter->angle);
-	vert_distance = vert_intersection(data, inter, frame);
-	horiz_distance = horiz_intersection(data, inter, frame);
-	if (vert_distance <= horiz_distance)
-	{
-		inter->distance = vert_distance;
-		inter->orient = 0;
-	}
-	else
-	{
-		inter->distance = horiz_distance;
-		inter->orient = 1;
-	}
+	return (inter);
 }
 
-void	render(t_data	*data)
+t_inter horiz_intersection(t_data *data, float angle, int frame)
 {
-	int		i;
+	t_inter	inter;
+
+	return (inter);
+}
+
+t_inter	raycast(t_data *data, float angle)
+{
+	t_inter	vertical;
+	t_inter	horizontal;
+	int	frame;
+
+	frame = get_frame(angle);
+	vertical = vert_intersection(data, angle, frame);
+	horizontal = horiz_intersection(data, angle, frame);
+	if (vertical.distance < horizontal.distance)
+		return (vertical);
+	else
+		return (horizontal);
+}
+
+void	render(t_data *data)
+{
 	int		nb_of_rays;
-	float	ray_angle_incr;//de cbien s'incr le inter->angle entre chaq ray
-	t_inter	*inter;//ray that we cast
+	float	angle;
+	float	incr;
+	int		ray;
+	t_inter	inter;
 
 
 	nb_of_rays =  data->win_size.x / RAY_SIZE;
-	inter = malloc(sizeof(t_inter));
-	if (!inter)
-		perror_exit("inter struct allocation failed", data);
-	inter->angle = normalize_angle(data->player_dir - (FOV / 2));
-	ray_angle_incr = FOV / nb_of_rays;
-	i = 0;
 	printf("nb of rays : %d\n", nb_of_rays);
-	while (i < nb_of_rays)
+	angle = normalize_angle(data->player_dir - (FOV / 2));
+	incr = FOV / nb_of_rays;
+	ray = -1;
+	while (++ray < nb_of_rays)
 	{
-		/*
-		point.x = data->player_pos.x;
-		point.y = data->player_pos.y;
-		//cast a ray
-		//trace ray until intersects a wall (map[y][x] == 1 )
-		//on update point en fonction de la direction = go en avant avec new dir
-			while (data->map[(int)point.y][(int)point.x] != 1)
-				//on projette le rayon
-		//record intersection point (x,y)
-			if (data->map[(int)point.y][(int)point.x] == 1)//should always hit a wall
-			{
-				//intersection_point.x = point.x;
-				//intersection_point.y = point.y;
-				intersection_point = point;
-			}
-		//compute distance to wall(ray length)
-			if (ray_angle = data->player_dir)//or angle = 0 ?
-				ray_length[column] = opposite / tan (ray_angle);//= adjacent
-			else
-				ray_length[column] = opposite / sin (ray_angle);//hypothenuse
-		*/
-	//compute length of ray
-		raycast(data, inter, i);
+		inter = raycast(data, angle);
+		render_column(data, inter, ray);
+		angle += incr;
 		//printf("distance to wall is : %f\n", inter->distance);
-	//render strip
-		render_column(data, *inter, i);
-	//add angle_increment => ray moves to the right
-		inter->angle += ray_angle_incr;
-		i++;
 	}
-	free(inter);
 }
