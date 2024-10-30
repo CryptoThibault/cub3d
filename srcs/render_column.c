@@ -6,19 +6,17 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:18:09 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/10/30 15:35:32 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:29:50 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	get_height(t_data *data, t_inter inter)
+int	get_height(t_data *data, float distance)
 {
 	int	height;
 
-	(void)inter;
-	//Get wall height from $inter.distance and data->win_size.y
-	height = data->win_size.y * 8 / 10;
+	height = data->win_size.y / distance;
 	//height *= cos(inter.angle);//arrondir les murs
 	return height;
 }
@@ -54,8 +52,11 @@ int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
 	int		tex_x;
 	void	*texture;
 
-	tex_x = 10;
-	tex_y /= height;
+	if (inter.orient)
+		tex_x = tex_size.x * (inter.pos.x - (int)inter.pos.x);
+	else
+		tex_x = tex_size.x * (inter.pos.y - (int)inter.pos.y);
+	tex_y = tex_size.y * (tex_y / height);
 	texture = data->textures[select_texture(data->player_dir, inter.orient)];
 	return (select_pixel(data, texture, tex_x, tex_y));
 }
@@ -73,7 +74,7 @@ void	render_column(t_data *data, t_inter inter, int ray)
 	t_ipos	pos;
 	int		color;
 
-	height = get_height(data, inter);
+	height = get_height(data, inter.distance);
 	pos.y = -1;
 	color = rgb_to_int(data->ceiling_rgb);
 	while (++pos.y < (data->win_size.y / 2 - height / 2) - 1)
@@ -83,7 +84,8 @@ void	render_column(t_data *data, t_inter inter, int ray)
 		pos.x = ray * RAY_SIZE - 1;
 		while (++pos.x < ray * RAY_SIZE + RAY_SIZE)
 		{
-			color = get_pixel_color(data, inter, height, pos.y);
+			color = get_pixel_color(data, inter, height,
+				pos.y - (data->win_size.y / 2 - height / 2));
 			mlx_pixel_put(data->mlx_ptr, data->win_ptr, pos.x, pos.y, color);
 		}
 	}
