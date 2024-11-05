@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:49:19 by achevron          #+#    #+#             */
-/*   Updated: 2024/10/30 16:08:20 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/05 18:00:51 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ From left to right
 VERTICAL = 0
 HRIZONTAL = 1
 */
+/*
 float	vert_intersection(t_data *data, t_inter	*inter, int frame)
 {
 	float	distance;
@@ -104,18 +105,67 @@ float	horiz_intersection(t_data *data, t_inter *inter, int frame)
 	//printf("horizontal distance : %f\n", distance);
 	return distance;
 }
-
+*/
 t_inter vert_intersection(t_data *data, float angle, int frame)
 {
 	t_inter	inter;
+	t_fpos	step;
 
+	inter.pos.x = (int)data->player_pos.x - 1;
+	printf("frame = %d\n", frame);
+	if (frame == 0 || frame == 3)
+		inter.pos.x += 2;
+	printf("inter.pos.x = %f\n", inter.pos.x);
+	inter.pos.y = data->player_pos.y + (inter.pos.x - data->player_pos.x) * tan(angle);
+	printf("inter.pos.y = %f\n", inter.pos.y);
+	step.x = 1;
+	if (frame == 1 || frame == 2)
+		step.x *= -1;
+	step.y = tan(angle);
+	if ((frame == 2 || frame == 3) && step.y > 0)
+		step.y *= -1;
+	if ((frame == 0 || frame == 1) && step.y < 0)
+		step.y *= -1;
+	while (!is_wall(data, inter.pos))
+	{
+		inter.pos.x += step.x;
+		inter.pos.y += step.y;
+	}
+	if (frame == 1 || frame == 2)
+		inter.pos.x++;
+	inter.orient = 0;
+	inter.angle = angle;
+	inter.distance = get_distance(data->player_pos, inter.pos);
 	return (inter);
 }
 
 t_inter horiz_intersection(t_data *data, float angle, int frame)
 {
 	t_inter	inter;
+	t_fpos	step;
 
+	inter.pos.y = (int)data->player_pos.y - 1;
+	if (frame == 0 || frame == 1)
+		inter.pos.y += 2;
+	inter.pos.x = data->player_pos.x + (inter.pos.y - data->player_pos.y) / tan(angle);
+	step.x = 1 / tan(angle);
+	if ((frame == 1 || frame == 2) && step.x > 0)
+		step.x *= -1;
+	if ((frame == 0 || frame == 3) && step.x < 0)
+		step.x *= -1;
+	step.y = 1;
+	if (frame == 2 || frame == 3)
+		step.y *= -1;
+	while (!is_wall(data, inter.pos))
+	{
+		inter.pos.x += step.x;
+		inter.pos.y += step.y;
+	}
+	if (frame == 2 || frame == 3)
+		inter.pos.y++;
+	inter.orient = 1;
+	inter.angle = angle;
+	inter.distance = get_distance(data->player_pos, inter.pos);
 	return (inter);
 }
 
@@ -144,8 +194,10 @@ void	render(t_data *data)
 
 
 	nb_of_rays =  data->win_size.x / RAY_SIZE;
-	printf("nb of rays : %d\n", nb_of_rays);
-	angle = normalize_angle(data->player_dir - (FOV / 2));
+	printf("[nb of rays] : %d\n", nb_of_rays);
+	printf("demi fov (rad) = %f\n", (FOV_RADIANS / 2));
+	angle = normalize_angle(data->player_dir - (FOV_RADIANS / 2));
+	printf("angle = %f\n", angle);
 	incr = FOV / nb_of_rays;
 	ray = -1;
 	while (++ray < nb_of_rays)
@@ -153,6 +205,7 @@ void	render(t_data *data)
 		inter = raycast(data, angle);
 		render_column(data, inter, ray);
 		angle += incr;
-		//printf("distance to wall is : %f\n", inter->distance);
+		angle = normalize_angle(angle);
+		printf("distance to wall is : %f\n", inter.distance);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:18:09 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/10/30 17:29:50 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:04:34 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,17 @@ int	select_pixel(t_data *data, void *texture, int tex_x, int tex_y)
 
 int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
 {
+	int	tex_id;
 	int		tex_x;
 	void	*texture;
 
+	tex_id = select_texture(data->player_dir, inter.orient);
 	if (inter.orient)
-		tex_x = tex_size.x * (inter.pos.x - (int)inter.pos.x);
+		tex_x = data->tex_size[tex_id].x * (inter.pos.x - (int)inter.pos.x);
 	else
-		tex_x = tex_size.x * (inter.pos.y - (int)inter.pos.y);
-	tex_y = tex_size.y * (tex_y / height);
-	texture = data->textures[select_texture(data->player_dir, inter.orient)];
+		tex_x = data->tex_size[tex_id].x * (inter.pos.y - (int)inter.pos.y);
+	tex_y = data->tex_size[tex_id].y * (tex_y / height);
+	texture = data->textures[tex_id];
 	return (select_pixel(data, texture, tex_x, tex_y));
 }
 
