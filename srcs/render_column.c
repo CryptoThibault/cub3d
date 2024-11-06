@@ -6,19 +6,24 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:18:09 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/05 17:04:34 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/06 18:12:27 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	get_height(t_data *data, float distance)
+int	get_height(t_data *data, t_inter inter)
 {
+	int	projection;
+	int virtual;
 	int	height;
 
-	height = data->win_size.y / distance;
-	//height *= cos(inter.angle);//arrondir les murs
-	return height;
+	projection = (data->win_size.x / 2) / tan(FOV / 2);
+	virtual = (1 / inter.distance) * projection;
+	printf("virtual = %d\n", virtual);
+	height = data->win_size.y / inter.distance; // last
+	printf("height = %d\n", height);
+	return (height);
 }
 
 int	rgb_to_int(int rgb[3])
@@ -65,8 +70,8 @@ int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
 
 void	render_raw(t_data *data, int ray, t_ipos pos, int color)
 {
-	pos.x = ray * RAY_SIZE - 1;
-	while (++pos.x < ray * RAY_SIZE + RAY_SIZE)
+	pos.x = ray * data->ray_size - 1;
+	while (++pos.x < ray * data->ray_size + data->ray_size)
 		mlx_pixel_put(data->mlx_ptr, data->win_ptr, pos.x, pos.y, color);
 }
 
@@ -76,15 +81,15 @@ void	render_column(t_data *data, t_inter inter, int ray)
 	t_ipos	pos;
 	int		color;
 
-	height = get_height(data, inter.distance);
+	height = get_height(data, inter);
 	pos.y = -1;
 	color = rgb_to_int(data->ceiling_rgb);
 	while (++pos.y < (data->win_size.y / 2 - height / 2) - 1)
 		render_raw(data, ray, pos, color);
 	while (++pos.y < (data->win_size.y / 2 + height / 2))
 	{
-		pos.x = ray * RAY_SIZE - 1;
-		while (++pos.x < ray * RAY_SIZE + RAY_SIZE)
+		pos.x = ray * data->ray_size - 1;
+		while (++pos.x < ray * data->ray_size + data->ray_size)
 		{
 			color = get_pixel_color(data, inter, height,
 				pos.y - (data->win_size.y / 2 - height / 2));

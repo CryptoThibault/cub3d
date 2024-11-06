@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:19:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/05 17:55:08 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:51:01 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	is_wall(t_data *data, t_fpos pos)
 {
-	//printf("pos.x = %d\n", (int)pos.x);
-	//printf("pos.y = %d\n", (int)pos.y);
 	return (data->map[(int)pos.y][(int)pos.x] == '1');
 }
 
@@ -30,12 +28,17 @@ float	normalize_angle(float angle)
 		normed_angle -= 2;
 	return (normed_angle);
 }
-/*
-int	is_in_map(t_data *data, t_fpos	pos)
+
+int	is_in_map(t_data *data, t_fpos pos)
 {
-	return (!!ft_strchr("01NSEW", data->map[(int)pos.y][(int)pos.x]));
+	if (pos.x < 0 || pos.x > data->map_size.x)
+		return (0);
+	if (pos.y < 0 || pos.y > data->map_size.y)
+		return (0);
+	return (1);
+	//return (!!ft_strchr("01NSEW", data->map[(int)pos.y][(int)pos.x]));
 }
-*/
+
 int	get_frame(float angle)
 {
 	int	direction;

@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/05 18:03:01 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:20:28 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@
 
 # define _USE_MATH_DEFINES
 # define RADIUS 0.2
-# define SPEED 0.001
-# define VELOCITY 0.001
-# define FOV 0.333333333333 
-# define FOV_RADIANS FOV * M_PI // to fix
-# define RAY_SIZE 192
+# define SPEED 0.1
+# define VELOCITY 0.1
+# define FOV 1.0/3.0
+# define NUM_RAYS 10
 
 typedef struct	s_ipos
 {
@@ -69,6 +68,7 @@ typedef struct	s_data
 	float	player_dir;
 	int		keylist[6];
 	int		keypress[XK_Right + 1];
+	int		ray_size;
 }		t_data;
 
 void	perror_exit(char *msg, t_data *data);
@@ -87,7 +87,7 @@ int		handle_keyrelease(int keysym, t_data *data);
 int		close_window(t_data *data);
 float	normalize_angle(float angle);
 int		is_wall(t_data *data, t_fpos pos);
-//int		is_in_map(t_data *data, t_fpos	pos);
+int		is_in_map(t_data *data, t_fpos	pos);
 int		get_frame(float angle);
 float get_distance(t_fpos a, t_fpos b);
 int	select_texture(float dir, int ori);
