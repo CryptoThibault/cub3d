@@ -22,11 +22,13 @@
 # include <X11/X.h>
 
 # define _USE_MATH_DEFINES
+# define NUM_SCREEN 2
+# define BAR_SIZE 30
 # define RADIUS 0.2
 # define SPEED 0.1
 # define VELOCITY 0.1
 # define FOV 1.0/3.0
-# define NUM_RAYS 10
+# define NUM_RAYS 192
 
 typedef struct	s_ipos
 {

@@ -15,7 +15,7 @@
 int	get_height(t_data *data, t_inter inter)
 {
 	int	projection;
-	int virtual;
+	int	virtual;
 	int	height;
 
 	projection = (data->win_size.x / 2) / tan(FOV / 2);
@@ -23,7 +23,8 @@ int	get_height(t_data *data, t_inter inter)
 	printf("virtual = %d\n", virtual);
 	height = data->win_size.y / inter.distance; // last
 	printf("height = %d\n", height);
-	return (height);
+	return (virtual / 5);
+	//return (height);
 }
 
 int	rgb_to_int(int rgb[3])
@@ -46,10 +47,10 @@ int	select_pixel(t_data *data, void *texture, int tex_x, int tex_y)
 	char	*buffer;
 	int	pixel_pos;
 
+	(void)data;
 	buffer = mlx_get_data_addr(texture, &bpp, &size_line, &endian);
-	pixel_pos = (tex_y / data->win_size.y) * size_line
-		+ (tex_x / (data->win_size.x / 2)) * (bpp / 8);
-	return (*(int *)(data + pixel_pos));
+	pixel_pos = tex_y * size_line + tex_x * (bpp / 8);
+	return (*(int *)(buffer + pixel_pos));
 }
 
 int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
@@ -63,7 +64,7 @@ int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
 		tex_x = data->tex_size[tex_id].x * (inter.pos.x - (int)inter.pos.x);
 	else
 		tex_x = data->tex_size[tex_id].x * (inter.pos.y - (int)inter.pos.y);
-	tex_y = data->tex_size[tex_id].y * (tex_y / height);
+	tex_y = (tex_y * data->tex_size[tex_id].y) / height;
 	texture = data->textures[tex_id];
 	return (select_pixel(data, texture, tex_x, tex_y));
 }
