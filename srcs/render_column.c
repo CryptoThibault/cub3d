@@ -14,17 +14,17 @@
 
 int	get_height(t_data *data, t_inter inter)
 {
-	int	projection;
-	int	virtual;
+	//int	projection;
+	//int	virtual;
 	int	height;
 
-	projection = (data->win_size.x / 2) / tan(FOV / 2);
-	virtual = (1 / inter.distance) * projection;
-	printf("virtual = %d\n", virtual);
+	//projection = (data->win_size.x / 2) / tan(FOV / 2);
+	//virtual = (1 / inter.distance) * projection;
+	//printf("virtual = %d\n", virtual);
 	height = data->win_size.y / inter.distance; // last
 	printf("height = %d\n", height);
-	return (virtual / 5);
-	//return (height);
+	//return (virtual / 5);
+	return (height);
 }
 
 int	rgb_to_int(int rgb[3])

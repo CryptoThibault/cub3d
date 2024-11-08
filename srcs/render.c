@@ -113,11 +113,10 @@ t_inter vert_intersection(t_data *data, float angle, int frame)
 
 	inter.pos.x = (int)data->player_pos.x;
 	if (frame == 0 || frame == 3)
-		inter.pos.x++;
-	
+		inter.pos.x++;	
 	inter.pos.y = data->player_pos.y + (inter.pos.x - data->player_pos.x) * tan(angle);
-	if (frame == 1 || frame == 2)
-		inter.pos.x--;
+	//if (frame == 1 || frame == 2)
+	//	inter.pos.x--;
 	printf("ver inter.pos.x = %f\n", inter.pos.x);
 	printf("ver inter.pos.y = %f\n", inter.pos.y);
 	step.x = 1;
@@ -130,7 +129,7 @@ t_inter vert_intersection(t_data *data, float angle, int frame)
 		step.y *= -1;
 	if (!is_in_map(data, inter.pos))
 	{
-		inter.distance = 100000; // it's false
+		inter.distance = data->map_size.y;
 		return (inter);
 	}
 	while (!is_wall(data, inter.pos))
@@ -140,14 +139,12 @@ t_inter vert_intersection(t_data *data, float angle, int frame)
 		if (!is_in_map(data, inter.pos))
 			break ;
 	}
-	if (frame == 1 || frame == 2)
-		inter.pos.x++;
+	//if (frame == 1 || frame == 2)
+	//	inter.pos.x++;
 	inter.orient = 0;
 	inter.angle = angle;
 	inter.distance = get_distance(data->player_pos, inter.pos);
 	printf("ver distance = %f\n", inter.distance);
-	//printf("end inter.pos.x = %f\n", inter.pos.x);
-	//printf("end inter.pos.y = %f\n", inter.pos.y);
 	return (inter);
 }
 
@@ -160,8 +157,8 @@ t_inter horiz_intersection(t_data *data, float angle, int frame)
 	if (frame == 0 || frame == 1)
 		inter.pos.y++;
 	inter.pos.x = data->player_pos.x + (inter.pos.y - data->player_pos.y) / tan(angle);
-	if (frame == 2 || frame == 3)
-		inter.pos.y--;
+	//if (frame == 2 || frame == 3)
+	//	inter.pos.y--;
 	printf("hor inter.pos.x = %f\n", inter.pos.x);
 	printf("hor inter.pos.y = %f\n", inter.pos.y);
 	step.x = 1 / tan(angle);
@@ -174,7 +171,7 @@ t_inter horiz_intersection(t_data *data, float angle, int frame)
 		step.y *= -1;
 	if (!is_in_map(data, inter.pos))
 	{
-		inter.distance = 100000; // it's false
+		inter.distance = data->map_size.x;
 		return (inter);
 	}
 	while (!is_wall(data, inter.pos))
@@ -184,8 +181,8 @@ t_inter horiz_intersection(t_data *data, float angle, int frame)
 		if (!is_in_map(data, inter.pos))
 			break ;
 	}
-	if (frame == 2 || frame == 3)
-		inter.pos.y++;
+	//if (frame == 2 || frame == 3)
+	//	inter.pos.y++;
 	inter.orient = 1;
 	inter.angle = angle;
 	inter.distance = get_distance(data->player_pos, inter.pos);
@@ -224,10 +221,11 @@ void	render(t_data *data)
 	while (++ray < NUM_RAYS)
 	{
 		inter = raycast(data, angle);
+		printf("before.distance = %f\n", inter.distance);
 		//inter.distance *= cos(angle - data->player_dir);
+		printf("after inter.distance = %f\n", inter.distance);
 		render_column(data, inter, ray);
 		angle += incr;
 		angle = normalize_angle(angle);
-		printf("distance to wall is : %f\n", inter.distance);
 	}
 }
