@@ -197,6 +197,7 @@ t_inter	raycast(t_data *data, float angle)
 	int	frame;
 
 	frame = get_frame(angle);
+	printf("angle = %f\n", angle);
 	printf("frame = %d\n", frame);
 	vertical = vert_intersection(data, angle, frame);
 	horizontal = horiz_intersection(data, angle, frame);

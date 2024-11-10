@@ -28,7 +28,7 @@
 # define SPEED 0.1
 # define VELOCITY 0.1
 # define FOV 1.0/3.0
-# define NUM_RAYS 192
+# define NUM_RAYS 20
 
 typedef struct	s_ipos
 {

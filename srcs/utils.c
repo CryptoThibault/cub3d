@@ -37,17 +37,17 @@ int	is_in_map(t_data *data, t_fpos pos)
 
 int	get_frame(float angle)
 {
-	int	direction;
+	int	frame;
 
 	if (angle >= 0 && angle < 0.5)
-		direction = 0;
-	if (angle >= 0.5 && angle < 1)
-		direction = 1;
-	if (angle >= 1 && angle < 1.5)
-		direction = 2;
-	if (angle >= 1.5 && angle < 2)
-		direction = 3;
-	return (direction);
+		frame = 0;
+	if (angle >= 0.5 && angle < 1.0)
+		frame = 1;
+	if (angle >= 1.0 && angle < 1.5)
+		frame = 2;
+	if (angle >= 1.5 && angle < 2.0)
+		frame = 3;
+	return (frame);
 }
 
 float get_distance(t_fpos a, t_fpos b)
