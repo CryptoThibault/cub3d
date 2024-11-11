@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:49:19 by achevron          #+#    #+#             */
-/*   Updated: 2024/11/06 17:00:46 by achevron         ###   ########.fr       */
+/*   Updated: 2024/11/11 18:09:03 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ t_inter vert_intersection(t_data *data, float angle, int frame)
 	if (frame == 0 || frame == 3)
 		inter.pos.x++;	
 	inter.pos.y = data->player_pos.y + (inter.pos.x - data->player_pos.x) * tan(angle);
-	//if (frame == 1 || frame == 2)
-	//	inter.pos.x--;
+	if (frame == 1 || frame == 2)
+		inter.pos.x--;
 	printf("ver inter.pos.x = %f\n", inter.pos.x);
 	printf("ver inter.pos.y = %f\n", inter.pos.y);
 	step.x = 1;
@@ -127,20 +127,13 @@ t_inter vert_intersection(t_data *data, float angle, int frame)
 		step.y *= -1;
 	if ((frame == 0 || frame == 1) && step.y < 0)
 		step.y *= -1;
-	if (!is_in_map(data, inter.pos))
-	{
-		inter.distance = data->map_size.y;
-		return (inter);
-	}
-	while (!is_wall(data, inter.pos))
+	while (is_in_map(data, inter.pos) && !is_wall(data, inter.pos))
 	{
 		inter.pos.x += step.x;
 		inter.pos.y += step.y;
-		if (!is_in_map(data, inter.pos))
-			break ;
 	}
-	//if (frame == 1 || frame == 2)
-	//	inter.pos.x++;
+	if (frame == 1 || frame == 2)
+		inter.pos.x++;
 	inter.orient = 0;
 	inter.angle = angle;
 	inter.distance = get_distance(data->player_pos, inter.pos);
@@ -157,8 +150,8 @@ t_inter horiz_intersection(t_data *data, float angle, int frame)
 	if (frame == 0 || frame == 1)
 		inter.pos.y++;
 	inter.pos.x = data->player_pos.x + (inter.pos.y - data->player_pos.y) / tan(angle);
-	//if (frame == 2 || frame == 3)
-	//	inter.pos.y--;
+	if (frame == 2 || frame == 3)
+		inter.pos.y--;
 	printf("hor inter.pos.x = %f\n", inter.pos.x);
 	printf("hor inter.pos.y = %f\n", inter.pos.y);
 	step.x = 1 / tan(angle);
@@ -169,20 +162,13 @@ t_inter horiz_intersection(t_data *data, float angle, int frame)
 	step.y = 1;
 	if (frame == 2 || frame == 3)
 		step.y *= -1;
-	if (!is_in_map(data, inter.pos))
-	{
-		inter.distance = data->map_size.x;
-		return (inter);
-	}
-	while (!is_wall(data, inter.pos))
+	while (is_in_map(data, inter.pos) && !is_wall(data, inter.pos))
 	{
 		inter.pos.x += step.x;
 		inter.pos.y += step.y;
-		if (!is_in_map(data, inter.pos))
-			break ;
 	}
-	//if (frame == 2 || frame == 3)
-	//	inter.pos.y++;
+	if (frame == 2 || frame == 3)
+		inter.pos.y++;
 	inter.orient = 1;
 	inter.angle = angle;
 	inter.distance = get_distance(data->player_pos, inter.pos);
@@ -210,23 +196,20 @@ t_inter	raycast(t_data *data, float angle)
 void	render(t_data *data)
 {
 	float	angle;
-	float	incr;
 	int		ray;
 	t_inter	inter;
 
 	data->ray_size = data->win_size.x / NUM_RAYS; 
-	printf("[ray_size] : %d\n", data->ray_size);
-	angle = normalize_angle(data->player_dir - (FOV / 2));
-	incr = FOV / NUM_RAYS;
+	printf("[ray_size] : %f\n", data->ray_size);
 	ray = -1;
 	while (++ray < NUM_RAYS)
 	{
+		printf("\nRAY %d\n", ray);
+		angle = normalize_angle(data->player_dir - (FOV / 2) + (FOV / NUM_RAYS) * ray);
 		inter = raycast(data, angle);
-		printf("before.distance = %f\n", inter.distance);
+		printf("before inter.distance = %f\n", inter.distance);
 		//inter.distance *= cos(angle - data->player_dir);
-		printf("after inter.distance = %f\n", inter.distance);
+		//printf("after inter.distance = %f\n", inter.distance);
 		render_column(data, inter, ray);
-		angle += incr;
-		angle = normalize_angle(angle);
 	}
 }

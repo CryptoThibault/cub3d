@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:18:09 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/06 18:12:27 by achevron         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:19:38 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 int	get_height(t_data *data, t_inter inter)
 {
-	//int	projection;
-	//int	virtual;
+	int	projection;
+	int	virtual;
 	int	height;
 
-	//projection = (data->win_size.x / 2) / tan(FOV / 2);
-	//virtual = (1 / inter.distance) * projection;
-	//printf("virtual = %d\n", virtual);
+	projection = (data->win_size.x / 2) / tan(FOV / 2);
+	virtual = (1.0 / inter.distance) * projection;
+	printf("virtual = %d\n", virtual);
 	height = data->win_size.y / inter.distance; // last
 	printf("height = %d\n", height);
-	//return (virtual / 5);
+	//return (virtual);
 	return (height);
 }
 

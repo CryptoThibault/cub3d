@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/06 17:20:28 by achevron         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:33:38 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@
 # include <X11/X.h>
 
 # define _USE_MATH_DEFINES
-# define NUM_SCREEN 2
+# define NUM_SCREEN 1
 # define BAR_SIZE 30
 # define RADIUS 0.2
 # define SPEED 0.1
 # define VELOCITY 0.1
 # define FOV 1.0/3.0
-# define NUM_RAYS 20
+# define NUM_RAYS 10
 
 typedef struct	s_ipos
 {
@@ -70,7 +70,7 @@ typedef struct	s_data
 	float	player_dir;
 	int		keylist[6];
 	int		keypress[XK_Right + 1];
-	int		ray_size;
+	float		ray_size;
 }		t_data;
 
 void	perror_exit(char *msg, t_data *data);
