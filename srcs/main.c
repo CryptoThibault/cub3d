@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:55:10 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/27 15:42:23 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:13:07 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	print_data(t_data *data)
 	printf("F %d,%d,%d\n", data->floor_rgb[0], data->floor_rgb[1], data->floor_rgb[2]);
 	printf("C %d,%d,%d\n\n", data->ceiling_rgb[0], data->ceiling_rgb[1], data->ceiling_rgb[2]);
 	print_array(data->map);
+	printf("\n[map size] x: %d, y: %d\n\n", data->map_size.x,  data->map_size.y);
 }
 /*---------------------------*/
 int	main(int ac, char **av)

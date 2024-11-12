@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/11 17:33:38 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/12 18:09:37 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ typedef struct s_inter
 {
 	t_fpos	pos;
 	int		orient;
-	float	angle;
 	float	distance;
 }		t_inter;
 
@@ -81,7 +80,6 @@ void	check_map(t_data *data);
 void	create_window(t_data *data);
 void    load_textures(t_data *data);
 void	run_game(t_data *data);
-void	update_screen(t_data *data);
 void	init_keylist(t_data *data);
 int		handle_key(t_data *data);
 int		handle_keypress(int keysym, t_data *data);
@@ -91,7 +89,7 @@ float	normalize_angle(float angle);
 int		is_wall(t_data *data, t_fpos pos);
 int		is_in_map(t_data *data, t_fpos	pos);
 int		get_frame(float angle);
-float get_distance(t_fpos a, t_fpos b);
+float	get_distance(t_fpos a, t_fpos b);
 int	select_texture(float dir, int ori);
 void	render(t_data *data);
 void	render_column(t_data *data, t_inter inter, int ray);

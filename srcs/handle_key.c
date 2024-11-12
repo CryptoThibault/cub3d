@@ -6,13 +6,13 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 13:18:09 by achevron          #+#    #+#             */
-/*   Updated: 2024/09/13 17:08:56 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/12 15:19:18 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	update_position(t_data *data, int xdir, int ydir, int *render)
+void	update_position(t_data *data, int xdir, int ydir, int *update)
 {
 	float	dir_radians;
 	t_fpos	move;
@@ -33,17 +33,17 @@ void	update_position(t_data *data, int xdir, int ydir, int *render)
 	if (data->map[(int)(data->player_pos.y + move.y + radius.y)]
 		[(int)data->player_pos.x] != '1')
 		data->player_pos.y += move.y;
-	*render = 1;
+	*update = 1;
 }
 
-void	update_direction(float *dir, float vel, int *render)
+void	update_direction(float *dir, float vel, int *update)
 {
 	if (*dir + vel < 0)
 		*dir += 2;
 	if (*dir + vel >= 2)
 		*dir -= 2;
 	*dir += vel;
-	*render = 1;
+	*update = 1;
 }
 
 int	close_window(t_data *data)
@@ -95,22 +95,22 @@ int	handle_keyrelease(int keysym, t_data *data)
 
 int	handle_key(t_data *data)
 {
-	int	render;
+	int	update;
 
-	render = 0;
+	update = 0;
 	if (data->keypress[XK_w])
-		update_position(data, 1, 0, &render);
+		update_position(data, 1, 0, &update);
 	if (data->keypress[XK_s])
-		update_position(data, -1, 0, &render);
+		update_position(data, -1, 0, &update);
 	if (data->keypress[XK_a])
-		update_position(data, 0, -1, &render);
+		update_position(data, 0, -1, &update);
 	if (data->keypress[XK_d])
-		update_position(data, 0, 1, &render);
+		update_position(data, 0, 1, &update);
 	if (data->keypress[XK_Left])
-		update_direction(&data->player_dir, -VELOCITY, &render);
+		update_direction(&data->player_dir, -VELOCITY, &update);
 	if (data->keypress[XK_Right])
-		update_direction(&data->player_dir, VELOCITY, &render);
-	if (render)
-		update_screen(data);
+		update_direction(&data->player_dir, VELOCITY, &update);
+	if (update)
+		render(data);
 	return (0);
 }
