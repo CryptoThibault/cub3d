@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/12 18:09:37 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/12 18:54:32 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define SPEED 0.1
 # define VELOCITY 0.1
 # define FOV 1.0/3.0
-# define NUM_RAYS 10
+# define NUM_RAYS 1920
 
 typedef struct	s_ipos
 {
