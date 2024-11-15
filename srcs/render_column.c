@@ -64,7 +64,8 @@ int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
 		tex_x = data->tex_size[tex_id].x * (inter.pos.x - (int)inter.pos.x);
 	else
 		tex_x = data->tex_size[tex_id].x * (inter.pos.y - (int)inter.pos.y);
-	tex_x = data->tex_size[tex_id].x - tex_x; //FLIP TEXTURE
+	if (tex_id == 2 || tex_id == 3)
+		tex_x = data->tex_size[tex_id].x - tex_x;
 	tex_y = (tex_y * data->tex_size[tex_id].y) / height;
 	texture = data->textures[tex_id];
 	return (select_pixel(data, texture, tex_x, tex_y));

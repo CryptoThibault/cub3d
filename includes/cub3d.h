@@ -22,7 +22,7 @@
 # include <X11/X.h>
 
 # define _USE_MATH_DEFINES
-# define NUM_SCREEN 1
+# define NUM_SCREEN 2
 # define BAR_SIZE 30
 # define RADIUS 0.2
 # define SPEED 0.1

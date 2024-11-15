@@ -20,12 +20,12 @@ t_inter vert_intersection(t_data *data, float angle, int frame)
 	inter.pos.x = (int)data->player_pos.x;
 	if (frame == 0 || frame == 3)
 		inter.pos.x++;	
-	inter.pos.y = data->player_pos.y + (inter.pos.x - data->player_pos.x) * tan(angle);
+	inter.pos.y = data->player_pos.y + (inter.pos.x - data->player_pos.x) * tan(angle * M_PI);
 	printf("\nver start inter.pos = x:%f y:%f\n", inter.pos.x, inter.pos.y);
 	if (frame == 1 || frame == 2)
 		inter.pos.x--;
 	step.x = 1;
-	step.y = tan(angle);
+	step.y = tan(angle * M_PI);
 	if (frame == 1 || frame == 2)
 		step.x *= -1;
 	if ((frame == 2 || frame == 3) && step.y > 0)
@@ -55,12 +55,12 @@ t_inter horiz_intersection(t_data *data, float angle, int frame)
 	inter.pos.y = (int)data->player_pos.y;
 	if (frame == 0 || frame == 1)
 		inter.pos.y++;
-	inter.pos.x = data->player_pos.x + (inter.pos.y - data->player_pos.y) / tan(angle);
+	inter.pos.x = data->player_pos.x + (inter.pos.y - data->player_pos.y) / tan(angle *M_PI);
 	printf("\nhor start inter.pos = x:%f y:%f\n", inter.pos.x, inter.pos.y);
 	if (frame == 2 || frame == 3)
 		inter.pos.y--;
 	step.y = 1;
-	step.x = 1 / tan(angle);
+	step.x = 1 / tan(angle * M_PI);
 	if (frame == 2 || frame == 3)
 		step.y *= -1;
 	if ((frame == 1 || frame == 2) && step.x > 0)
@@ -115,7 +115,7 @@ void	render(t_data *data)
 		angle = normalize_angle(data->player_dir - (FOV / 2) + (FOV / NUM_RAYS) * ray);
 		inter = raycast(data, angle);
 		printf("\nbefore inter.distance = %f\n", inter.distance);
-		//inter.distance *= cos(angle - data->player_dir);
+		inter.distance *= cos((angle - data->player_dir) * M_PI);
 		printf("after inter.distance = %f\n", inter.distance);
 		render_column(data, inter, ray);
 	}
