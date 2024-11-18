@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:18:09 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/18 17:41:25 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/18 18:05:14 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,9 @@ void	render_column(t_data *data, t_inter inter, int ray)
 	height = data->win_size.y / inter.distance;
 	pos.y = -1;
 	color = rgb_to_int(data->ceiling_rgb);
-	while (++pos.y < (data->win_size.y / 2 - height / 2) - 1)
+	while (++pos.y < (data->win_size.y / 2 - height / 2))
 		render_raw(data, ray, pos, color);
+	pos.y--;
 	while (++pos.y < (data->win_size.y / 2 + height / 2))
 	{
 		pos.x = ray * data->ray_size - 1;
