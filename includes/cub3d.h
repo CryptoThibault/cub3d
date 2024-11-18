@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/12 18:54:32 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:39:58 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 # include <X11/X.h>
 
 # define _USE_MATH_DEFINES
-# define NUM_SCREEN 2
-# define BAR_SIZE 30
+# define NUM_SCREEN 1
+# define BAR_SIZE 70
 # define RADIUS 0.2
-# define SPEED 0.1
-# define VELOCITY 0.1
+# define SPEED 0.2
+# define VELOCITY 0.05
 # define FOV 1.0/3.0
 # define NUM_RAYS 1920
 
@@ -90,7 +90,7 @@ int		is_wall(t_data *data, t_fpos pos);
 int		is_in_map(t_data *data, t_fpos	pos);
 int		get_frame(float angle);
 float	get_distance(t_fpos a, t_fpos b);
-int	select_texture(float dir, int ori);
+int	select_texture(t_fpos player_pos, t_inter inter);
 void	render(t_data *data);
 void	render_column(t_data *data, t_inter inter, int ray);
 

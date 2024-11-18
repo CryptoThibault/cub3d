@@ -3,8 +3,8 @@ SO textures/S-letter.xpm
 EA textures/E-letter.xpm
 WE textures/W-letter.xpm
 
-F 220,100,0
-C 225,30,0
+F 0,46,254
+C 255,203,34
 
         1111111111111111111111111
         1000000000110000000000001

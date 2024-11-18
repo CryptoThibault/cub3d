@@ -6,22 +6,22 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:01:19 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/18 12:35:53 by achevron         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:25:58 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	select_texture(float dir, int ori)
-{
-	int	tex_id;
+#include "cub3d.h"
 
-	tex_id = 0;
-	if ((dir >= 1 && dir < 1.5 && ori) || (dir >= 1.5 && dir < 2 && ori))
-		tex_id = 0;
-	else if ((dir >= 0 && dir < 0.5 && ori) || (dir >= 0.5 && dir < 1 && ori))
-		tex_id = 1;
-	else if ((dir >= 0.5 && dir < 1 && !ori) || (dir >= 1 && dir < 1.5 && !ori))
-		tex_id = 2;
-	else if ((dir >= 0 && dir < 0.5 && !ori) || (dir >= 1.5 && dir < 2 && !ori))
-		tex_id = 3;
-	return (tex_id);
+int	select_texture(t_fpos player_pos, t_inter inter)
+{
+	if (inter.orient && inter.pos.y <= player_pos.y)
+		return (0);
+	else if (inter.orient && inter.pos.y > player_pos.y)
+		return (1);
+	else if (!inter.orient && inter.pos.x <= player_pos.x)
+		return (2);
+	else if (!inter.orient && inter.pos.x > player_pos.x)
+		return (3);
+	else
+		return (-1);
 }

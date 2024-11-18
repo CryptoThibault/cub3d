@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 19:26:11 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/10/18 15:28:29 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:25:54 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ void	load_textures(t_data *data)
 			&data->tex_size[1].x, &data->tex_size[1].y);
 	if (!data->textures[1])
 		perror_exit("failed to load south texture", data);
-	data->textures[2] = mlx_xpm_file_to_image(data->mlx_ptr, data->east_texture,
+	data->textures[2] = mlx_xpm_file_to_image(data->mlx_ptr, data->west_texture,
 			&data->tex_size[2].x, &data->tex_size[2].y);
 	if (!data->textures[2])
-		perror_exit("failed to load east texture", data);
-	data->textures[3] = mlx_xpm_file_to_image(data->mlx_ptr, data->west_texture,
+		perror_exit("failed to load west texture", data);
+	data->textures[3] = mlx_xpm_file_to_image(data->mlx_ptr, data->east_texture,
 			&data->tex_size[3].x, &data->tex_size[3].y);
 	if (!data->textures[3])
-		perror_exit("failed to load west exture", data);
+		perror_exit("failed to load east exture", data);
 }

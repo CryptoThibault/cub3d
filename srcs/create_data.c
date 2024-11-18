@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:55:02 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/27 15:21:24 by achevron         ###   ########.fr       */
+/*   Updated: 2024/11/18 16:02:58 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,34 @@ int	array_size(char **array)
 	return (size);
 }
 
+void	add_spaces(t_data *data)
+{
+	t_ipos	pos;
+	int	size;
+	char	*buffer;
+	char	*temp;
+
+	pos.y = -1;
+	while (data->map[++pos.y])
+	{
+		size = data->map_size.x - ft_strlen(data->map[pos.y]);
+		buffer = malloc(size + 1);
+		if (!buffer)
+			perror_exit("buffer allocation failed", data);
+		pos.x = -1;
+		while (++pos.x < size)
+			buffer[pos.x] = ' ';
+		buffer[size] = 0;
+		temp = ft_strjoin(data->map[pos.y], buffer);
+		free(data->map[pos.y]);
+		free(buffer);
+		data->map[pos.y] = temp;
+	}
+}
+
 void	get_map(t_data *data, char **array, t_ipos pos)
 {
-	data->map = malloc(sizeof(char *) * ((array_size(array + pos.y) + 1)));
+	data->map = malloc(sizeof(char *) * (array_size(array + pos.y) + 1));
 	if (!data->map)
 		perror_exit("map allocation failed", data);
 	data->map_size.y = -1;
@@ -37,6 +62,7 @@ void	get_map(t_data *data, char **array, t_ipos pos)
 			data->map_size.x = pos.x;
 	}
 	data->map[++data->map_size.y] = NULL;
+	add_spaces(data);
 }
 
 int	get_line_count(int fd)

@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:19:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/12 17:45:19 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/18 15:20:13 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ float	normalize_angle(float angle)
 
 int	is_in_map(t_data *data, t_fpos pos)
 {
-	if (pos.x < 0 || pos.x > data->map_size.x)
+	if (pos.x < 0 || pos.x >= data->map_size.x)
 		return (0);
-	if (pos.y < 0 || pos.y > data->map_size.y)
+	if (pos.y < 0 || pos.y >= data->map_size.y)
 		return (0);
 	return (1);
 }

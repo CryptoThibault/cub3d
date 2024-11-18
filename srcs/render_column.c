@@ -6,26 +6,11 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:18:09 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/12 18:56:34 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/18 17:41:25 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	get_height(t_data *data, t_inter inter)
-{
-	int	projection;
-	int	virtual;
-	int	height;
-
-	projection = (data->win_size.x / 2) / tan(FOV / 2);
-	virtual = (1.0 / inter.distance) * projection;
-	printf("virtual = %d\n", virtual);
-	height = data->win_size.y / inter.distance; // last
-	printf("height = %d\n", height);
-	//return (virtual);
-	return (height);
-}
 
 int	rgb_to_int(int rgb[3])
 {
@@ -59,12 +44,14 @@ int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
 	int		tex_x;
 	void	*texture;
 
-	tex_id = select_texture(data->player_dir, inter.orient);
+	tex_id = select_texture(data->player_pos, inter);
+	if (tex_id == -1)
+		perror_exit("texture selection failed", data);
 	if (inter.orient)
 		tex_x = data->tex_size[tex_id].x * (inter.pos.x - (int)inter.pos.x);
 	else
 		tex_x = data->tex_size[tex_id].x * (inter.pos.y - (int)inter.pos.y);
-	if (tex_id == 2 || tex_id == 3)
+	if (tex_id == 1 || tex_id == 2)
 		tex_x = data->tex_size[tex_id].x - tex_x;
 	tex_y = (tex_y * data->tex_size[tex_id].y) / height;
 	texture = data->textures[tex_id];
@@ -84,7 +71,7 @@ void	render_column(t_data *data, t_inter inter, int ray)
 	t_ipos	pos;
 	int		color;
 
-	height = get_height(data, inter);
+	height = data->win_size.y / inter.distance;
 	pos.y = -1;
 	color = rgb_to_int(data->ceiling_rgb);
 	while (++pos.y < (data->win_size.y / 2 - height / 2) - 1)
