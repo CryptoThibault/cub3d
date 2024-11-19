@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:18:09 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/18 18:05:14 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:07:13 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,24 @@
 
 int	rgb_to_int(int rgb[3])
 {
-	int color;
+	int	color;
 
 	color = 0;
-	color |= (rgb[2] & 0xFF); 
+	color |= (rgb[2] & 0xFF);
 	color |= (rgb[1] & 0xFF) << 8;
 	color |= (rgb[0] & 0xFF) << 16;
 	color |= 0xFF << 24;
 	return (color);
 }
 
-int	select_pixel(t_data *data, void *texture, int tex_x, int tex_y)
+int	select_pixel(void *texture, int tex_x, int tex_y)
 {
-	int	bpp;
-	int	size_line;
-	int	endian;
+	int		bpp;
+	int		size_line;
+	int		endian;
 	char	*buffer;
-	int	pixel_pos;
+	int		pixel_pos;
 
-	(void)data;
 	buffer = mlx_get_data_addr(texture, &bpp, &size_line, &endian);
 	pixel_pos = tex_y * size_line + tex_x * (bpp / 8);
 	return (*(int *)(buffer + pixel_pos));
@@ -40,7 +39,7 @@ int	select_pixel(t_data *data, void *texture, int tex_x, int tex_y)
 
 int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
 {
-	int	tex_id;
+	int		tex_id;
 	int		tex_x;
 	void	*texture;
 
@@ -55,13 +54,13 @@ int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
 		tex_x = data->tex_size[tex_id].x - tex_x;
 	tex_y = (tex_y * data->tex_size[tex_id].y) / height;
 	texture = data->textures[tex_id];
-	return (select_pixel(data, texture, tex_x, tex_y));
+	return (select_pixel(texture, tex_x, tex_y));
 }
 
 void	render_raw(t_data *data, int ray, t_ipos pos, int color)
 {
-	pos.x = ray * data->ray_size - 1;
-	while (++pos.x < ray * data->ray_size + data->ray_size)
+	pos.x = ray * RAY_SIZE - 1;
+	while (++pos.x < ray * RAY_SIZE + RAY_SIZE)
 		mlx_pixel_put(data->mlx_ptr, data->win_ptr, pos.x, pos.y, color);
 }
 
@@ -79,11 +78,11 @@ void	render_column(t_data *data, t_inter inter, int ray)
 	pos.y--;
 	while (++pos.y < (data->win_size.y / 2 + height / 2))
 	{
-		pos.x = ray * data->ray_size - 1;
-		while (++pos.x < ray * data->ray_size + data->ray_size)
+		pos.x = ray * RAY_SIZE - 1;
+		while (++pos.x < ray * RAY_SIZE + RAY_SIZE)
 		{
 			color = get_pixel_color(data, inter, height,
-				pos.y - (data->win_size.y / 2 - height / 2));
+					pos.y - (data->win_size.y / 2 - height / 2));
 			mlx_pixel_put(data->mlx_ptr, data->win_ptr, pos.x, pos.y, color);
 		}
 	}

@@ -6,21 +6,32 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:49:19 by achevron          #+#    #+#             */
-/*   Updated: 2024/11/18 18:07:16 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:51:23 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-t_inter vert_intersection(t_data *data, float angle, int frame)
+void	find_intersection(t_data *data, t_inter *inter, t_fpos step)
+{
+	while (is_in_map(data, inter->pos)
+		&& data->map[(int)inter->pos.y][(int)inter->pos.x] != '1')
+	{
+		inter->pos.x += step.x;
+		inter->pos.y += step.y;
+	}
+}
+
+t_inter	vert_intersection(t_data *data, float angle, int frame)
 {
 	t_inter	inter;
 	t_fpos	step;
 
 	inter.pos.x = (int)data->player_pos.x;
 	if (frame == 0 || frame == 3)
-		inter.pos.x++;	
-	inter.pos.y = data->player_pos.y + (inter.pos.x - data->player_pos.x) * tan(angle * M_PI);
+		inter.pos.x++;
+	inter.pos.y = data->player_pos.y + (inter.pos.x - data->player_pos.x)
+		* tan(angle * M_PI);
 	if (frame == 1 || frame == 2)
 		inter.pos.x--;
 	step.x = 1;
@@ -31,11 +42,7 @@ t_inter vert_intersection(t_data *data, float angle, int frame)
 		step.y *= -1;
 	if ((frame == 0 || frame == 1) && step.y < 0)
 		step.y *= -1;
-	while (is_in_map(data, inter.pos) && !is_wall(data, inter.pos))
-	{
-		inter.pos.x += step.x;
-		inter.pos.y += step.y;
-	}
+	find_intersection(data, &inter, step);
 	if (frame == 1 || frame == 2)
 		inter.pos.x++;
 	inter.orient = 0;
@@ -43,7 +50,7 @@ t_inter vert_intersection(t_data *data, float angle, int frame)
 	return (inter);
 }
 
-t_inter horiz_intersection(t_data *data, float angle, int frame)
+t_inter	horiz_intersection(t_data *data, float angle, int frame)
 {
 	t_inter	inter;
 	t_fpos	step;
@@ -51,7 +58,8 @@ t_inter horiz_intersection(t_data *data, float angle, int frame)
 	inter.pos.y = (int)data->player_pos.y;
 	if (frame == 0 || frame == 1)
 		inter.pos.y++;
-	inter.pos.x = data->player_pos.x + (inter.pos.y - data->player_pos.y) / tan(angle * M_PI);
+	inter.pos.x = data->player_pos.x + (inter.pos.y - data->player_pos.y)
+		/ tan(angle * M_PI);
 	if (frame == 2 || frame == 3)
 		inter.pos.y--;
 	step.y = 1;
@@ -62,11 +70,7 @@ t_inter horiz_intersection(t_data *data, float angle, int frame)
 		step.x *= -1;
 	if ((frame == 0 || frame == 3) && step.x < 0)
 		step.x *= -1;
-	while (is_in_map(data, inter.pos) && !is_wall(data, inter.pos))
-	{
-		inter.pos.x += step.x;
-		inter.pos.y += step.y;
-	}
+	find_intersection(data, &inter, step);
 	if (frame == 2 || frame == 3)
 		inter.pos.y++;
 	inter.orient = 1;
@@ -91,15 +95,17 @@ t_inter	raycast(t_data *data, float angle)
 
 void	render(t_data *data)
 {
-	float	angle;
+	int		num_rays;
 	int		ray;
+	float	angle;
 	t_inter	inter;
 
-	data->ray_size = data->win_size.x / NUM_RAYS; 
+	num_rays = data->win_size.x / RAY_SIZE;
 	ray = -1;
-	while (++ray < NUM_RAYS)
+	while (++ray < num_rays)
 	{
-		angle = normalize_angle(data->player_dir - (FOV / 2) + (FOV / NUM_RAYS) * ray);
+		angle = normalize_angle(data->player_dir - ((FOV / MAX_FOV) / 2)
+				+ ((FOV / MAX_FOV) / num_rays) * ray);
 		inter = raycast(data, angle);
 		inter.distance *= cos((angle - data->player_dir) * M_PI);
 		render_column(data, inter, ray);

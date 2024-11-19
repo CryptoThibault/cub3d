@@ -6,7 +6,7 @@
 #    By: achevron <achevron@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 14:26:00 by achevron          #+#    #+#              #
-#    Updated: 2024/10/18 17:22:10 by tchalaou         ###   ########.fr        #
+#    Updated: 2024/11/19 18:29:15 by achevron         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ LFLAGS = -L${MLX} -lmlx -lX11 -lXext -lm
 SRCS = srcs/main.c srcs/create_data.c srcs/check_map.c srcs/perror_exit.c \
        srcs/create_window.c srcs/load_textures.c srcs/run_game.c \
        srcs/handle_key.c srcs/utils.c srcs/render.c srcs/render_column.c \
-       srcs/select_texture.c
+       srcs/select_texture.c srcs/update.c srcs/get_elements.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)

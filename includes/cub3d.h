@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/18 18:00:53 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:53:08 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,22 @@
 
 # define _USE_MATH_DEFINES
 # define NUM_SCREEN 1
-# define BAR_SIZE 70
+# define BAR_SIZE 0
+# define WIN_RATIO 0.75
 # define RADIUS 0.2
 # define SPEED 0.2
-# define VELOCITY 0.05
-# define FOV 1.0/3.0
-# define NUM_RAYS 1920
+# define VELOCITY 0.1
+# define FOV 70.0
+# define MAX_FOV 180.0
+# define RAY_SIZE 1
 
-typedef struct	s_ipos
+typedef struct s_ipos
 {
 	int	x;
 	int	y;
 }		t_ipos;
 
-typedef struct	s_fpos
+typedef struct s_fpos
 {
 	float	x;
 	float	y;
@@ -49,7 +51,7 @@ typedef struct s_inter
 	float	distance;
 }		t_inter;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
@@ -68,29 +70,33 @@ typedef struct	s_data
 	t_fpos	player_pos;
 	float	player_dir;
 	int		keylist[6];
-	int		keypress[XK_Right + 1];
-	float		ray_size;
+	int		keypress[65364];
 }		t_data;
 
 void	perror_exit(char *msg, t_data *data);
 void	free_data(t_data *data);
 void	free_array(char **array);
 t_data	*create_data(char *infile);
+void	get_elements(t_data *data, char **array, t_ipos *pos);
+int		ignore_whitespace(char **array, t_ipos *pos);
 void	check_map(t_data *data);
 void	create_window(t_data *data);
-void    load_textures(t_data *data);
+void	load_textures(t_data *data);
 void	run_game(t_data *data);
 void	init_keylist(t_data *data);
 int		handle_key(t_data *data);
 int		handle_keypress(int keysym, t_data *data);
 int		handle_keyrelease(int keysym, t_data *data);
+void	update_position(t_data *data, int xdir, int ydir, int *update);
+void	update_direction(float *dir, float vel, int *update);
 int		close_window(t_data *data);
 float	normalize_angle(float angle);
-int		is_wall(t_data *data, t_fpos pos);
+int		array_size(char **array);
+int		get_line_count(int fd);
 int		is_in_map(t_data *data, t_fpos	pos);
-int		get_frame(float angle);
 float	get_distance(t_fpos a, t_fpos b);
-int	select_texture(t_fpos player_pos, t_inter inter);
+int		get_frame(float angle);
+int		select_texture(t_fpos player_pos, t_inter inter);
 void	render(t_data *data);
 void	render_column(t_data *data, t_inter inter, int ray);
 

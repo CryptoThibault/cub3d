@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 17:41:17 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/27 15:22:00 by achevron         ###   ########.fr       */
+/*   Updated: 2024/11/19 17:58:27 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,18 @@ void	set_player(t_data *data, t_ipos pos, char symbol, char **char_list)
 
 void	check_outlines(t_data *data, t_ipos pos)
 {
-	if  (pos.y == 0 || pos.y == data->map_size.y)
-		perror_exit("the map is not surronded by '1'", data);
-	if  (pos.x == 0 || pos.x == data->map_size.x)
-		perror_exit("the map is not surronded by '1'", data);
+	if (pos.y == 0 || pos.y == data->map_size.y - 1)
+		perror_exit("map symbol invalid", data);
+	if (pos.x == 0 || pos.x == data->map_size.x - 1)
+		perror_exit("map symbol invalid", data);
 	if (!ft_strchr("01NSEW", data->map[pos.y - 1][pos.x]))
-		perror_exit("the map is not surronded by '1'", data);
+		perror_exit("map symbol invalid", data);
 	if (!ft_strchr("01NSEW", data->map[pos.y + 1][pos.x]))
-		perror_exit("the map is not surronded by '1'", data);
+		perror_exit("map symbol invalid", data);
 	if (!ft_strchr("01NSEW", data->map[pos.y][pos.x - 1]))
-		perror_exit("the map is not surronded by '1'", data);
+		perror_exit("map symbol invalid", data);
 	if (!ft_strchr("01NSEW", data->map[pos.y][pos.x + 1]))
-		perror_exit("the map is not surronded by '1'", data);
+		perror_exit("map symbol invalid", data);
 }
 
 void	check_map(t_data *data)
@@ -53,11 +53,11 @@ void	check_map(t_data *data)
 	pos.y = -1;
 	while (data->map[++pos.y])
 	{
-		pos.x = -1;	
+		pos.x = -1;
 		while (data->map[pos.y][++pos.x])
 		{
 			if (!ft_strchr(char_list, data->map[pos.y][pos.x]))
-				perror_exit("invalid symbol in map", data);
+				perror_exit("map symbol invalid", data);
 			if (ft_strchr("NSEW", data->map[pos.y][pos.x]))
 				set_player(data, pos, data->map[pos.y][pos.x], &char_list);
 			else if (data->map[pos.y][pos.x] != '0')
@@ -66,6 +66,6 @@ void	check_map(t_data *data)
 		}
 	}
 	if (!ft_strncmp(char_list, " 01NSEW", 7))
-		perror_exit("the player symbol are not in the map", data);
+		perror_exit("player symbol not in the map", data);
 	free(char_list);
 }

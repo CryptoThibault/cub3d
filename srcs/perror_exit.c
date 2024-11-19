@@ -6,29 +6,29 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:52 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/09/11 19:10:57 by tchalaou         ###   ########.fr       */
+/*   Updated: 2024/11/19 18:01:10 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void    free_textures(t_data *data, int nb)
+void	free_textures(t_data *data, int nb)
 {
-    int    i;
+	int	i;
 
-    i = -1;
-    while (++i < nb)
-        if (data->textures[i])
-            mlx_destroy_image(data->mlx_ptr, data->textures[i]);
+	i = -1;
+	while (++i < nb)
+		if (data->textures[i])
+			mlx_destroy_image(data->mlx_ptr, data->textures[i]);
 }
 
 void	free_window(t_data *data)
 {
-	if(data->win_ptr)
+	if (data->win_ptr)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);
 	free(data->mlx_ptr);
-} 
+}
 
 void	free_array(char **array)
 {
