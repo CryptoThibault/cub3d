@@ -48,6 +48,8 @@ void	free_data(t_data *data)
 	free(data->south_texture);
 	free(data->east_texture);
 	free(data->west_texture);
+	if (data->num_array)
+		free_array(data->num_array);
 	if (data->char_list)
 		free(data->char_list);
 	if (data->map)

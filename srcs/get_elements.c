@@ -39,7 +39,6 @@ void	get_texture(t_data *data, char **texture, char **array, t_ipos *pos)
 
 void	get_rgb(t_data *data, int rgb[3], char **array, t_ipos *pos)
 {
-	char	**numbers;
 	int		i;
 
 	pos->x++;
@@ -48,20 +47,18 @@ void	get_rgb(t_data *data, int rgb[3], char **array, t_ipos *pos)
 	while (array[pos->y][++i])
 		if (!ft_isdigit(array[pos->y][i]) && array[pos->y][i] != ',')
 			perror_exit("color format not valid", data);
-	numbers = ft_split(array[pos->y] + pos->x, ',');
-	if (array_size(numbers) != 3)
+	data->num_array = ft_split(array[pos->y] + pos->x, ',');
+	if (array_size(data->num_array) != 3)
 		perror_exit("color format not valid", data);
 	i = -1;
 	while (++i < 3)
 	{
-		rgb[i] = ft_atoi(numbers[i]);
+		rgb[i] = ft_atoi(data->num_array[i]);
 		if (rgb[i] < 0 || rgb[i] > 255)
-		{
-			free_array(numbers);
 			perror_exit("color format not valid", data);
-		}
 	}
-	free_array(numbers);
+	free_array(data->num_array);
+	data->num_array = NULL;
 }
 
 void	select_elements(t_data *data, char **array, t_ipos *pos)

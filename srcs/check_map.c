@@ -67,4 +67,5 @@ void	check_map(t_data *data)
 	if (!ft_strncmp(data->char_list, " 01NSEW", 7))
 		perror_exit("player symbol not in the map", data);
 	free(data->char_list);
+	data->char_list = NULL;
 }

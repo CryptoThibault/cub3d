@@ -19,9 +19,9 @@ void	create_window(t_data *data)
 		perror_exit("could not load mlx", data);
 	mlx_get_screen_size(data->mlx_ptr, &data->win_size.x, &data->win_size.y);
 	data->win_size.x /= NUM_SCREEN;
-	data->win_size.y -= BAR_SIZE;
 	data->win_size.x *= WIN_RATIO;
 	data->win_size.y *= WIN_RATIO;
+	data->win_size.y -= BAR_SIZE;
 	data->win_ptr = mlx_new_window(data->mlx_ptr, data->win_size.x,
 			data->win_size.y, "cub3D");
 	if (!data->win_ptr)
