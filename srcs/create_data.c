@@ -92,11 +92,11 @@ char	**read_infile(t_data *data, char *infile)
 	while (++i < lc)
 	{
 		array[i] = get_next_line(fd);
-		array[i][ft_strlen(array[i]) - 1] = 0;
+		if (array[i][ft_strlen(array[i]) - 1] == '\n')
+			array[i][ft_strlen(array[i]) - 1] = 0;
 	}
 	array[i] = NULL;
-	close(fd);
-	return (array);
+	return (close(fd), array);
 }
 
 t_data	*create_data(char *infile)
