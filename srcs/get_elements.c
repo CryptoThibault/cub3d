@@ -56,7 +56,10 @@ void	get_rgb(t_data *data, int rgb[3], char **array, t_ipos *pos)
 	{
 		rgb[i] = ft_atoi(numbers[i]);
 		if (rgb[i] < 0 || rgb[i] > 255)
+		{
+			free_array(numbers);
 			perror_exit("color format not valid", data);
+		}
 	}
 	free_array(numbers);
 }

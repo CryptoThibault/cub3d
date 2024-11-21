@@ -1,11 +1,9 @@
 NO textures/N-letter.xpm
+F 255,255,255
 SO textures/S-letter.xpm
+C 0,0,0
 EA textures/E-letter.xpm
 WE textures/W-letter.xpm
-
-F 220,100,0
-C 225,30,0
-
 1111
 1NE1
 1111

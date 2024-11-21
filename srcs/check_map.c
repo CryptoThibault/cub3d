@@ -12,10 +12,10 @@
 
 #include "cub3d.h"
 
-void	set_player(t_data *data, t_ipos pos, char symbol, char **char_list)
+void	set_player(t_data *data, t_ipos pos, char symbol)
 {
-	free(*char_list);
-	*char_list = ft_strdup(" 01");
+	free(data->char_list);
+	data->char_list = ft_strdup(" 01");
 	data->player_pos.x = pos.x + 0.5;
 	data->player_pos.y = pos.y + 0.5;
 	if (symbol == 'N')
@@ -47,25 +47,24 @@ void	check_outlines(t_data *data, t_ipos pos)
 void	check_map(t_data *data)
 {
 	t_ipos	pos;
-	char	*char_list;
 
-	char_list = ft_strdup(" 01NSEW");
+	data->char_list = ft_strdup(" 01NSEW");
 	pos.y = -1;
 	while (data->map[++pos.y])
 	{
 		pos.x = -1;
 		while (data->map[pos.y][++pos.x])
 		{
-			if (!ft_strchr(char_list, data->map[pos.y][pos.x]))
+			if (!ft_strchr(data->char_list, data->map[pos.y][pos.x]))
 				perror_exit("map symbol invalid", data);
 			if (ft_strchr("NSEW", data->map[pos.y][pos.x]))
-				set_player(data, pos, data->map[pos.y][pos.x], &char_list);
+				set_player(data, pos, data->map[pos.y][pos.x]);
 			else if (data->map[pos.y][pos.x] != '0')
 				continue ;
 			check_outlines(data, pos);
 		}
 	}
-	if (!ft_strncmp(char_list, " 01NSEW", 7))
+	if (!ft_strncmp(data->char_list, " 01NSEW", 7))
 		perror_exit("player symbol not in the map", data);
-	free(char_list);
+	free(data->char_list);
 }

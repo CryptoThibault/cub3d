@@ -22,9 +22,9 @@
 # include <X11/X.h>
 
 # define _USE_MATH_DEFINES
-# define NUM_SCREEN 1
+# define NUM_SCREEN 2
 # define BAR_SIZE 0
-# define WIN_RATIO 0.75
+# define WIN_RATIO 1
 # define RADIUS 0.2
 # define SPEED 0.2
 # define VELOCITY 0.1
@@ -65,6 +65,7 @@ typedef struct s_data
 	char	*east_texture;
 	int		floor_rgb[3];
 	int		ceiling_rgb[3];
+	char	*char_list;
 	char	**map;
 	t_ipos	map_size;
 	t_fpos	player_pos;
