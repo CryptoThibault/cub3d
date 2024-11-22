@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:56 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/19 18:53:08 by achevron         ###   ########.fr       */
+/*   Updated: 2024/11/22 13:54:16 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <X11/X.h>
 
 # define _USE_MATH_DEFINES
-# define NUM_SCREEN 2
+# define NUM_SCREEN 1
 # define BAR_SIZE 0
 # define WIN_RATIO 0.5
 # define RADIUS 0.2
