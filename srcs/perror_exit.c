@@ -24,7 +24,7 @@ void	free_textures(t_data *data, int nb)
 
 void	free_window(t_data *data)
 {
-	//free_img just destroy img
+	mlx_destroy_image(data->mlx_ptr, data->img.img_ptr);
 	if (data->win_ptr)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);

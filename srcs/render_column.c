@@ -26,15 +26,12 @@ int	rgb_to_int(int rgb[3])
 
 int	select_pixel(void *texture, int tex_x, int tex_y)
 {
-	int		bpp;
-	int		size_line;
-	int		endian;
-	char	*buffer;
+	t_img	img;
 	int		pixel_pos;
 
-	buffer = mlx_get_data_addr(texture, &bpp, &size_line, &endian);
-	pixel_pos = tex_y * size_line + tex_x * (bpp / 8);
-	return (*(int *)(buffer + pixel_pos));
+	img.buffer = mlx_get_data_addr(texture, &img.bpp, &img.size_line, &img.endian);
+	pixel_pos = tex_y * img.size_line + tex_x * (img.bpp / 8);
+	return (*(int *)(img.buffer + pixel_pos));
 }
 
 int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
@@ -57,11 +54,22 @@ int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
 	return (select_pixel(texture, tex_x, tex_y));
 }
 
+void	put_pixel_to_image(t_img img, t_ipos pos, int color)
+{
+	int pixel_pos;
+
+	pixel_pos = (pos.y * img.size_line) + (pos.x * (img.bpp / 8));
+	img.buffer[pixel_pos] = (color & 0xFF);
+	img.buffer[pixel_pos + 1] = (color >> 8) & 0xFF;
+	img.buffer[pixel_pos + 2] = (color >> 16) & 0xFF;
+	img.buffer[pixel_pos + 3] = (color >> 24);
+}
+
 void	render_raw(t_data *data, int ray, t_ipos pos, int color)
 {
 	pos.x = ray * RAY_SIZE - 1;
 	while (++pos.x < ray * RAY_SIZE + RAY_SIZE)
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, pos.x, pos.y, color);//my own
+		put_pixel_to_image(data->img, pos, color);
 }
 
 void	render_column(t_data *data, t_inter inter, int ray)
@@ -83,11 +91,10 @@ void	render_column(t_data *data, t_inter inter, int ray)
 		{
 			color = get_pixel_color(data, inter, height,
 					pos.y - (data->win_size.y / 2 - height / 2));
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, pos.x, pos.y, color);//my own
+			put_pixel_to_image(data->img, pos, color);
 		}
 	}
 	color = rgb_to_int(data->floor_rgb);
 	while (++pos.y < data->win_size.y)
 		render_raw(data, ray, pos, color);
-	//mlx put img to wdw
 }

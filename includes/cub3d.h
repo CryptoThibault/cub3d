@@ -22,7 +22,7 @@
 # include <X11/X.h>
 
 # define _USE_MATH_DEFINES
-# define NUM_SCREEN 1
+# define NUM_SCREEN 2
 # define BAR_SIZE 0
 # define WIN_RATIO 0.5
 # define RADIUS 0.2
@@ -51,10 +51,20 @@ typedef struct s_inter
 	float	distance;
 }		t_inter;
 
+typedef struct s_img
+{
+	void	*img_ptr;
+	char	*buffer;
+	int	bpp;
+	int	size_line;
+	int	endian;
+}		t_img;
+
 typedef struct s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	t_img	img;
 	t_ipos	win_size;
 	void	*textures[4];
 	t_ipos	tex_size[4];
