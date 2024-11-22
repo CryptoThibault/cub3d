@@ -26,6 +26,10 @@ void	create_window(t_data *data)
 			data->win_size.y, "cub3D");
 	if (!data->win_ptr)
 		perror_exit("could not create window", data);
-	data->img.img_ptr = mlx_new_image(data->mlx_ptr, data->win_size.x, data->win_size.y);
-	data->img.buffer = mlx_get_data_addr(data->img.img_ptr, &data->img.bpp, &data->img.size_line, &data->img.endian);
+	data->img.mlx_img = mlx_new_image(data->mlx_ptr, data->win_size.x,
+			data->win_size.y);
+	if (!data->img.mlx_img)
+		perror_exit("could not create image", data);
+	data->img.addr = (uint32_t *)mlx_get_data_addr(data->img.mlx_img, &data->img.bpp,
+			&data->img.bpl, &data->img.endian);
 }

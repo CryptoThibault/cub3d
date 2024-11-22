@@ -110,5 +110,6 @@ void	render(t_data *data)
 		inter.distance *= cos((angle - data->player_dir) * M_PI);
 		render_column(data, inter, ray);
 	}
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img_ptr, 0, 0);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+		data->img.mlx_img, 0, 0);
 }

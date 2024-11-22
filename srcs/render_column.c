@@ -29,9 +29,10 @@ int	select_pixel(void *texture, int tex_x, int tex_y)
 	t_img	img;
 	int		pixel_pos;
 
-	img.buffer = mlx_get_data_addr(texture, &img.bpp, &img.size_line, &img.endian);
-	pixel_pos = tex_y * img.size_line + tex_x * (img.bpp / 8);
-	return (*(int *)(img.buffer + pixel_pos));
+	img.addr = (uint32_t *)mlx_get_data_addr(texture, &img.bpp,
+		&img.bpl, &img.endian);
+	pixel_pos = tex_y * img.bpl + tex_x * (img.bpp / 8);
+	return (*(int *)((char *)img.addr + pixel_pos));
 }
 
 int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
@@ -54,22 +55,19 @@ int	get_pixel_color(t_data *data, t_inter inter, int height, int tex_y)
 	return (select_pixel(texture, tex_x, tex_y));
 }
 
-void	put_pixel_to_image(t_img img, t_ipos pos, int color)
+void	put_pixel_to_image(t_img img, int x, int y, int color)
 {
-	int pixel_pos;
+	uint32_t	*pixel;
 
-	pixel_pos = (pos.y * img.size_line) + (pos.x * (img.bpp / 8));
-	img.buffer[pixel_pos] = (color & 0xFF);
-	img.buffer[pixel_pos + 1] = (color >> 8) & 0xFF;
-	img.buffer[pixel_pos + 2] = (color >> 16) & 0xFF;
-	img.buffer[pixel_pos + 3] = (color >> 24);
+	pixel = img.addr + (uint32_t)(y + x);
+	*pixel = color;
 }
 
 void	render_raw(t_data *data, int ray, t_ipos pos, int color)
 {
 	pos.x = ray * RAY_SIZE - 1;
 	while (++pos.x < ray * RAY_SIZE + RAY_SIZE)
-		put_pixel_to_image(data->img, pos, color);
+		put_pixel_to_image(data->img, pos.x, pos.y * data->win_size.x, color);
 }
 
 void	render_column(t_data *data, t_inter inter, int ray)
@@ -77,6 +75,7 @@ void	render_column(t_data *data, t_inter inter, int ray)
 	int		height;
 	t_ipos	pos;
 	int		color;
+	int		max_height;
 
 	height = data->win_size.y / inter.distance;
 	pos.y = -1;
@@ -84,16 +83,21 @@ void	render_column(t_data *data, t_inter inter, int ray)
 	while (++pos.y < (data->win_size.y / 2 - height / 2))
 		render_raw(data, ray, pos, color);
 	pos.y--;
-	while (++pos.y < (data->win_size.y / 2 + height / 2))
+	if (height < data->win_size.y)
+		max_height = (data->win_size.y / 2 + height / 2);
+	else
+		max_height = data->win_size.y;
+	while (++pos.y < max_height)
 	{
 		pos.x = ray * RAY_SIZE - 1;
 		while (++pos.x < ray * RAY_SIZE + RAY_SIZE)
 		{
 			color = get_pixel_color(data, inter, height,
 					pos.y - (data->win_size.y / 2 - height / 2));
-			put_pixel_to_image(data->img, pos, color);
+			put_pixel_to_image(data->img, pos.x, pos.y * data->win_size.x, color);
 		}
 	}
+	pos.y--;
 	color = rgb_to_int(data->floor_rgb);
 	while (++pos.y < data->win_size.y)
 		render_raw(data, ray, pos, color);

@@ -24,10 +24,10 @@
 # define _USE_MATH_DEFINES
 # define NUM_SCREEN 2
 # define BAR_SIZE 0
-# define WIN_RATIO 0.5
+# define WIN_RATIO 1
 # define RADIUS 0.2
-# define SPEED 0.2
-# define VELOCITY 0.1
+# define SPEED 0.1
+# define VELOCITY 0.05
 # define FOV 70.0
 # define MAX_FOV 180.0
 # define RAY_SIZE 1
@@ -53,11 +53,11 @@ typedef struct s_inter
 
 typedef struct s_img
 {
-	void	*img_ptr;
-	char	*buffer;
-	int	bpp;
-	int	size_line;
-	int	endian;
+	void		*mlx_img;
+	uint32_t	*addr;
+	int			bpp;
+	int			bpl;
+	int			endian;
 }		t_img;
 
 typedef struct s_data
