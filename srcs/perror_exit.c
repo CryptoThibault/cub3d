@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:54:52 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/19 18:01:10 by achevron         ###   ########.fr       */
+/*   Updated: 2024/11/22 11:26:28 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	free_textures(t_data *data, int nb)
 
 void	free_window(t_data *data)
 {
+	//free_img just destroy img
 	if (data->win_ptr)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	mlx_destroy_display(data->mlx_ptr);

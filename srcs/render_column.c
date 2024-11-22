@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:18:09 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/19 18:07:13 by achevron         ###   ########.fr       */
+/*   Updated: 2024/11/22 11:27:56 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	render_raw(t_data *data, int ray, t_ipos pos, int color)
 {
 	pos.x = ray * RAY_SIZE - 1;
 	while (++pos.x < ray * RAY_SIZE + RAY_SIZE)
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, pos.x, pos.y, color);
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, pos.x, pos.y, color);//my own
 }
 
 void	render_column(t_data *data, t_inter inter, int ray)
@@ -83,10 +83,11 @@ void	render_column(t_data *data, t_inter inter, int ray)
 		{
 			color = get_pixel_color(data, inter, height,
 					pos.y - (data->win_size.y / 2 - height / 2));
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, pos.x, pos.y, color);
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, pos.x, pos.y, color);//my own
 		}
 	}
 	color = rgb_to_int(data->floor_rgb);
 	while (++pos.y < data->win_size.y)
 		render_raw(data, ray, pos, color);
+	//mlx put img to wdw
 }

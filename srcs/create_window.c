@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:38:17 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/21 15:38:23 by achevron         ###   ########.fr       */
+/*   Updated: 2024/11/22 11:25:45 by achevron         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,6 @@ void	create_window(t_data *data)
 			data->win_size.y, "cub3D");
 	if (!data->win_ptr)
 		perror_exit("could not create window", data);
+	//create img
+	//data.img.addr
 }
