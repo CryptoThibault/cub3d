@@ -108,6 +108,7 @@ int		get_line_count(int fd);
 int		is_in_map(t_data *data, t_fpos	pos);
 float	get_distance(t_fpos a, t_fpos b);
 int		get_frame(float angle);
+int		select_pixel(void *texture, int tex_x, int tex_y);
 int		select_texture(t_fpos player_pos, t_inter inter);
 void	render(t_data *data);
 void	render_column(t_data *data, t_inter inter, int ray);
