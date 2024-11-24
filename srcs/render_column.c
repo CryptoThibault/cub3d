@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 17:18:09 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/22 11:27:56 by achevron         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:05:38 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	render_column(t_data *data, t_inter inter, int ray)
 			color = get_pixel_color(data, inter, height,
 					pos.y - (data->win_size.y / 2 - height / 2));
 			put_pixel_to_image(data->img, pos.x,
-					pos.y * data->win_size.x, color);
+				pos.y * data->win_size.x, color);
 		}
 	}
 	pos.y--;

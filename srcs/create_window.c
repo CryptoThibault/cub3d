@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 15:38:17 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/22 11:25:45 by achevron         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:05:11 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void	create_window(t_data *data)
 			data->win_size.y);
 	if (!data->img.mlx_img)
 		perror_exit("could not create image", data);
-	data->img.addr = (uint32_t *)mlx_get_data_addr(data->img.mlx_img, &data->img.bpp,
-			&data->img.bpl, &data->img.endian);
+	data->img.addr = (uint32_t *)mlx_get_data_addr(data->img.mlx_img,
+			&data->img.bpp, &data->img.bpl, &data->img.endian);
 }

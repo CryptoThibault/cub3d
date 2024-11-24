@@ -6,7 +6,7 @@
 /*   By: achevron <achevron@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 16:01:19 by tchalaou          #+#    #+#             */
-/*   Updated: 2024/11/19 18:19:36 by achevron         ###   ########.fr       */
+/*   Updated: 2024/11/24 14:06:04 by tchalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	select_pixel(void *texture, int tex_x, int tex_y)
 	int		pixel_pos;
 
 	img.addr = (uint32_t *)mlx_get_data_addr(texture, &img.bpp,
-		&img.bpl, &img.endian);
+			&img.bpl, &img.endian);
 	pixel_pos = tex_y * img.bpl + tex_x * (img.bpp / 8);
 	return (*(int *)((char *)img.addr + pixel_pos));
 }
